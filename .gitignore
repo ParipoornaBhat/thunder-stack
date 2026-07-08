@@ -1,0 +1,11 @@
+node_modules
+.expo
+.next
+dist
+build
+.turbo
+.env
+.dev.vars
+drizzle/
+*.log
+.wrangler

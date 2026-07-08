@@ -1,0 +1,36 @@
+{
+  "name": "thunder-stack",
+  "version": "1.0.1",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.14.0",
+  "scripts": {
+    "dev": "pnpm db:seed && turbo run dev",
+    "build": "pnpm db:seed && turbo run build",
+    "start": "turbo run start --filter=!mobile",
+    "typecheck": "turbo run typecheck",
+    "db:generate": "pnpm --filter @thunder/db db:generate",
+    "db:migrate": "pnpm --filter @thunder/db db:migrate",
+    "db:seed": "pnpm --filter @thunder/db db:seed",
+    "migrate:generate": "pnpm --filter @thunder/db db:generate --name",
+    "migrate:deploy": "pnpm --filter @thunder/db db:migrate",
+    "clean": "node scripts/clean.js",
+    "clean:install": "node scripts/clean.js && pnpm install",
+    "ci": "pnpm run clean:install",
+    "native": "cross-env EXPO_NO_METRO_LAZY=1 pnpm --filter mobile start --clear"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "^19.0.0"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "turbo": "2.10.4"
+  }
+}

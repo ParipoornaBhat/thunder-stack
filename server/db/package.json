@@ -1,0 +1,32 @@
+{
+  "name": "@thunder/db",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "db:generate": "tsx node_modules/drizzle-kit/bin.cjs generate",
+    "db:migrate": "tsx node_modules/drizzle-kit/bin.cjs migrate",
+    "db:seed": "node --import tsx src/seed.ts"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "0.10.4",
+    "better-auth": "1.6.23",
+    "dotenv": "16.6.1",
+    "drizzle-orm": "0.38.4",
+    "pg": "8.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.0",
+    "@types/pg": "8.20.0",
+    "drizzle-kit": "0.30.6",
+    "tsx": "4.23.0",
+    "typescript": "5.9.3"
+  }
+}
