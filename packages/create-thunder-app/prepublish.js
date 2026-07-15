@@ -36,7 +36,8 @@ function copyRecursive(src, dest) {
     fs.mkdirSync(dest, { recursive: true });
     const files = fs.readdirSync(src);
     for (const file of files) {
-      if (file !== 'node_modules' && file !== 'dist' && file !== '.next' && file !== '.turbo' && file !== '.expo' && file !== 'web-build') {
+      const ignoreDirs = ['node_modules', 'dist', '.next', '.turbo', '.expo', 'web-build', '.git', '.wrangler'];
+      if (!ignoreDirs.includes(file) && !file.startsWith('.env') && file !== '.dev.vars') {
         copyRecursive(path.join(src, file), path.join(dest, file));
       }
     }
@@ -59,7 +60,9 @@ for (const folder of foldersToCopy) {
 // Copy files
 for (const file of filesToCopy) {
   const src = path.join(rootDir, file);
-  const dest = path.join(templateDir, file);
+  // Rename .gitignore to gitignore to prevent npm from renaming it to .npmignore on publish
+  const destName = file === '.gitignore' ? 'gitignore' : file;
+  const dest = path.join(templateDir, destName);
   if (fs.existsSync(src)) {
     fs.copyFileSync(src, dest);
   }

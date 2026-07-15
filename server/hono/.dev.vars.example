@@ -1,0 +1,25 @@
+# Database Settings
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/db"
+
+# Better Auth Configuration
+BETTER_AUTH_SECRET="your-better-auth-secret-min-32-characters"
+BETTER_AUTH_URL="http://localhost:4000"
+
+# Frontend Configuration
+CLIENT_URL="http://localhost:3000"
+NEXT_PUBLIC_SERVER_URL="http://localhost:4000"
+EXPO_PUBLIC_SERVER_URL="http://localhost:4000"
+
+# Google OAuth Config
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+
+# Expo Mobile Google OAuth Config
+EXPO_PUBLIC_GOOGLE_CLIENT_ID_WEB="your-google-client-id-for-web"
+EXPO_PUBLIC_GOOGLE_CLIENT_ID_IOS="your-expo-ios-client-id"
+EXPO_PUBLIC_GOOGLE_CLIENT_ID_ANDROID="your-expo-android-client-id"
+
+# Email Configuration (SMTP)
+SMTP_APP_PASSWORD=""
+SMTP_EMAIL=""
+SMTP_NAME="Test Email"

@@ -19,16 +19,6 @@
     "ci": "pnpm run clean:install",
     "native": "cross-env EXPO_NO_METRO_LAZY=1 pnpm --filter mobile start --clear"
   },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "^19.0.0"
-    },
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "sharp",
-      "workerd"
-    ]
-  },
   "devDependencies": {
     "cross-env": "^10.1.0",
     "turbo": "2.10.4"

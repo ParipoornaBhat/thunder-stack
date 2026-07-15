@@ -134,7 +134,13 @@ async function main() {
       const ext = path.extname(src);
       const textExtensions = ['.json', '.js', '.ts', '.tsx', '.css', '.html', '.md', '.toml', '.yml', '.yaml', '.example'];
       
-      if (textExtensions.includes(ext) || path.basename(src).startsWith('.')) {
+      const filename = path.basename(src);
+      let targetDest = dest;
+      if (filename === 'gitignore') {
+        targetDest = path.join(path.dirname(dest), '.gitignore');
+      }
+
+      if (textExtensions.includes(ext) || filename.startsWith('.') || filename === 'gitignore') {
         let content = fs.readFileSync(src, 'utf8');
         
         // Perform template replacements
@@ -147,10 +153,10 @@ async function main() {
         content = content.replace(/com\.thunder\.app/g, `com.${safeProjectName}.app`);
         content = content.replace(/admin@thunderstack\.dev/g, `admin@${safeProjectName}.dev`);
         
-        fs.writeFileSync(dest, content, 'utf8');
+        fs.writeFileSync(targetDest, content, 'utf8');
       } else {
         // Binary copy
-        fs.copyFileSync(src, dest);
+        fs.copyFileSync(src, targetDest);
       }
     }
   }
@@ -164,6 +170,14 @@ async function main() {
   if (fs.existsSync(envExamplePath)) {
     fs.copyFileSync(envExamplePath, envPath);
     console.log('Created .env config file from template.');
+  }
+
+  // Copy .dev.vars.example to .dev.vars
+  const devVarsExamplePath = path.join(targetDir, 'server/hono/.dev.vars.example');
+  const devVarsPath = path.join(targetDir, 'server/hono/.dev.vars');
+  if (fs.existsSync(devVarsExamplePath)) {
+    fs.copyFileSync(devVarsExamplePath, devVarsPath);
+    console.log('Created server/hono/.dev.vars config file from template.');
   }
 
   // Automate dependency installation
