@@ -172,10 +172,28 @@ async function main() {
     console.log('Created .env config file from template.');
   }
 
-  // Copy .dev.vars.example to .dev.vars
+  // Connect server/hono/.dev.vars to root .env so they are always in sync
   const devVarsExamplePath = path.join(targetDir, 'server/hono/.dev.vars.example');
   const devVarsPath = path.join(targetDir, 'server/hono/.dev.vars');
-  if (fs.existsSync(devVarsExamplePath)) {
+  if (fs.existsSync(envPath)) {
+    try {
+      // Try symlink first (relative from server/hono/ directory)
+      fs.symlinkSync('../../.env', devVarsPath, 'file');
+      console.log('Connected server/hono/.dev.vars to root .env via symlink.');
+    } catch (symlinkError) {
+      try {
+        // Try hardlink next (direct reference)
+        fs.linkSync(envPath, devVarsPath);
+        console.log('Connected server/hono/.dev.vars to root .env via hardlink.');
+      } catch (hardlinkError) {
+        // Fallback to copying
+        if (fs.existsSync(devVarsExamplePath)) {
+          fs.copyFileSync(devVarsExamplePath, devVarsPath);
+          console.log('Created server/hono/.dev.vars config file from template (fallback).');
+        }
+      }
+    }
+  } else if (fs.existsSync(devVarsExamplePath)) {
     fs.copyFileSync(devVarsExamplePath, devVarsPath);
     console.log('Created server/hono/.dev.vars config file from template.');
   }
