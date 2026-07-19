@@ -24,8 +24,8 @@ thunder-stack/
 ## 🚀 Getting Started
 
 ### 📋 Prerequisites
-- **NodeJS** (v20+ recommended)
-- **pnpm** (v10+ recommended)
+- **NodeJS** (v22+ recommended for pnpm 11)
+- **pnpm** (v11+ recommended)
 
 ### 🛠️ Step-by-Step Initialization
 

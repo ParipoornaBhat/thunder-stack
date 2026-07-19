@@ -3,11 +3,7 @@ packages:
   - "server/*"
   - "packages/*"
 
-onlyBuiltDependencies:
-  - esbuild
-  - sharp
-  - workerd
-
-overrides:
-  "@types/react": "^19.0.0"
-
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
