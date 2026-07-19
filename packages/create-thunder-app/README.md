@@ -18,15 +18,58 @@ npx create-thunder-stack my-app
 npx create-thunder-stack .
 ```
 
-The installer will automatically:
-1. Scaffold the entire monorepo workspace.
-2. Install all package dependencies using `pnpm` or `npm`.
-3. Set up your local configuration config files (`.env`).
+The installer will automatically scaffold the workspace, install dependencies, and run the preparation script to copy `.env.example` to `.env` and connect `.dev.vars` inside the Hono server to it.
 
-Once completed, start developing:
+Once the setup is completed, follow these steps to initialize and start your project:
+
+### ⚙️ Step-by-Step Initialization
+
+#### 1. Navigate to your project directory
 ```bash
 cd my-app
+```
+
+#### 2. Configure Your Database URL
+Open the root `.env` file and configure your `DATABASE_URL` with your Postgres connection string (e.g., Neon serverless Postgres).
+
+#### 3. Generate Database Migration
+Generate your database schema migration named `initial_schema`:
+```bash
+pnpm migrate:generate initial_schema
+```
+
+#### 4. Deploy Database Migration
+Apply the migrations to your target database:
+```bash
+pnpm migrate:deploy
+```
+
+---
+
+## 🛠️ Run, Build & Dev Commands
+
+Run these commands from the root directory:
+
+### Run Development Servers Concurrently
+```bash
 pnpm dev
+```
+*Starts Next.js (port `3000`), Hono Backend Server (port `8787`), and the Expo bundler concurrently.*
+
+### Run the Mobile Application (Expo Client)
+```bash
+pnpm native
+```
+
+### Build & Start for Production
+To build all applications:
+```bash
+pnpm build
+```
+
+To start the production servers (Next.js web & Hono backend):
+```bash
+pnpm start
 ```
 
 ---

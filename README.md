@@ -27,26 +27,56 @@ thunder-stack/
 - **NodeJS** (v20+ recommended)
 - **pnpm** (v10+ recommended)
 
----
+### 🛠️ Step-by-Step Initialization
 
-## 🛠️ Build & Dev Commands (Together/Global)
-
-These commands run across the entire monorepo using **Turbo** to manage dependencies and concurrency efficiently.
-
-### Install All Dependencies
+#### 1. Install Dependencies & Link Environment Files
+Run the install command. This will automatically execute the post-installation/prepare script, creating `.env` from `.env.example` and automatically connecting/linking it to `server/hono/.dev.vars`:
 ```bash
 pnpm install
 ```
+*(If you ever need to manually recreate the connection later, you can run `pnpm run prepare`.)*
+
+#### 2. Configure Your Database URL
+Open the newly created `.env` file in the root directory and update your database credentials (e.g., `DATABASE_URL`).
+
+#### 3. Generate the Initial Database Migration
+Generate your database schema/migration file with the name `initial_schema`:
+```bash
+pnpm migrate:generate initial_schema
+```
+
+#### 4. Deploy the Database Migration
+Apply the migrations to your target database:
+```bash
+pnpm migrate:deploy
+```
+
+---
+
+## 🛠️ Run, Build & Dev Commands
+
+These commands run globally using **Turbo** to orchestrate across all workspaces.
 
 ### Start All Development Servers Concurrently
 ```bash
 pnpm dev
 ```
-*Starts Next.js (port `3000`), Hono Backend Server (port `8787`), and Expo bundler concurrently.*
+*Starts Next.js (port `3000`), Hono Backend Server (port `8787`), and the Expo bundler concurrently.*
 
-### Build All Projects in Monorepo
+### Run the Mobile Application (Expo Client)
+```bash
+pnpm native
+```
+
+### Build & Start for Production
+To build all applications and packages:
 ```bash
 pnpm build
+```
+
+To start the production servers (Next.js web & Hono backend):
+```bash
+pnpm start
 ```
 
 ### Typecheck All Projects

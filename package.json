@@ -5,6 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@10.14.0",
   "scripts": {
+    "prepare": "node scripts/setup-env.js",
     "dev": "pnpm db:seed && turbo run dev",
     "build": "pnpm db:seed && turbo run build",
     "start": "turbo run start --filter=!mobile",
