@@ -13,7 +13,13 @@
     "build": "tsc",
     "db:generate": "tsx node_modules/drizzle-kit/bin.cjs generate",
     "db:migrate": "tsx node_modules/drizzle-kit/bin.cjs migrate",
-    "db:seed": "node --import tsx src/seed.ts"
+    "db:seed": "node --import tsx src/seed.ts",
+    "db:reset": "node --import tsx src/scripts/reset.ts",
+    "db:rollback": "node --import tsx src/scripts/rollback.ts",
+    "db:status": "node --import tsx src/scripts/status.ts",
+    "db:help": "node --import tsx src/scripts/help.ts",
+    "db:push": "tsx node_modules/drizzle-kit/bin.cjs push",
+    "db:studio": "tsx node_modules/drizzle-kit/bin.cjs studio"
   },
   "dependencies": {
     "@neondatabase/serverless": "0.10.4",
