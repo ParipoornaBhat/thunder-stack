@@ -11,6 +11,9 @@ importers:
       cross-env:
         specifier: ^10.1.0
         version: 10.1.0
+      next:
+        specifier: 15.5.20
+        version: 15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       turbo:
         specifier: 2.10.4
         version: 2.10.4
