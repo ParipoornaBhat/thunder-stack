@@ -147,7 +147,7 @@ export function SiteHeader() {
           {/* GitHub / NPM Badge or Auth Buttons */}
           {isDocsOnly ? (
             <a
-              href="https://github.com"
+              href="https://github.com/ParipoornaBhat/thunder-stack"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-muted/80 border border-border/50 px-4 text-xs font-semibold text-foreground hover:bg-accent transition-all"

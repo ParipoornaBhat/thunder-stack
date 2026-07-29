@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Globe, Github, Linkedin, Package } from "lucide-react";
 
 export function SiteFooter() {
   const pathname = usePathname();
@@ -75,19 +76,37 @@ export function SiteFooter() {
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <span className="text-xs font-mono bg-muted px-2.5 py-1 rounded-md text-foreground border border-border/50 inline-block">
-                  npx create-thunder-app
-                </span>
-              </li>
-              <li>
-                <Link
-                  href="https://github.com/ParipoornaBhat"
+                <a
+                  href="https://www.npmjs.com/package/create-thunder-stack"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  className="text-xs font-mono bg-muted px-2.5 py-1 rounded-md text-foreground hover:text-primary border border-border/50 inline-flex items-center gap-1.5 transition-colors"
                 >
+                  <Package className="h-3.5 w-3.5 text-red-500" />
+                  npx create-thunder-stack
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://github.com/ParipoornaBhat/thunder-stack"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1.5"
+                >
+                  <Github className="h-4 w-4" />
                   GitHub Repository
-                </Link>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.npmjs.com/package/create-thunder-stack"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1.5"
+                >
+                  <Package className="h-4 w-4 text-red-500" />
+                  npm Registry Package
+                </a>
               </li>
             </ul>
           </div>
@@ -97,10 +116,49 @@ export function SiteFooter() {
           <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} THUNDER Stack. All rights reserved.
           </p>
-          <div className="flex flex-col items-center md:items-end gap-1">
+          <div className="flex flex-col items-center md:items-end gap-1.5">
             <p className="text-xs font-medium text-foreground/90">
-              Made by <span className="text-primary font-semibold">Paripoorna B</span>
+              Made by{" "}
+              <a
+                href="https://paripoorna.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-bold hover:underline"
+              >
+                Paripoorna B
+              </a>
             </p>
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <a
+                href="https://paripoorna.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 hover:text-primary transition-colors font-medium"
+              >
+                <Globe className="h-3.5 w-3.5" />
+                paripoorna.me
+              </a>
+              <span>&bull;</span>
+              <a
+                href="https://github.com/ParipoornaBhat/thunder-stack"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 hover:text-primary transition-colors font-medium"
+              >
+                <Github className="h-3.5 w-3.5" />
+                GitHub
+              </a>
+              <span>&bull;</span>
+              <a
+                href="https://www.linkedin.com/in/paripoorna-bhat/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 hover:text-primary transition-colors font-medium"
+              >
+                <Linkedin className="h-3.5 w-3.5" />
+                LinkedIn
+              </a>
+            </div>
           </div>
         </div>
       </div>

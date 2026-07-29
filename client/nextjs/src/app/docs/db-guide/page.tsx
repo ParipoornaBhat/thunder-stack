@@ -15,6 +15,7 @@ import {
   ArrowRight,
   Sparkles,
   HelpCircle,
+  ShieldAlert,
 } from "lucide-react";
 import Link from "next/link";
 import { SiteHeader } from "~/components/layout/SiteHeader";
@@ -327,6 +328,122 @@ const pool = new pg.Pool({
 });
 
 export const db = drizzle(pool);`}</pre>
+          </div>
+        </section>
+
+        {/* Section: Production Scenarios & Conflict Resolution */}
+        <section className="space-y-8 mb-20">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2.5">
+              <ShieldAlert className="h-6 w-6 text-destructive" />
+              Production Scenarios & Conflict Resolution
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              Common challenges faced during production database operations and how to resolve them safely.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {/* Scenario 1 */}
+            <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4 shadow-xs">
+              <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-destructive/10 text-destructive text-xs font-bold">1</span>
+                Adding a "NOT NULL" Column to a Table with Existing Data
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <strong>The Issue:</strong> If you add a new column defined as <code className="font-mono text-xs text-primary">notNull()</code> to an active table that already has rows of data, PostgreSQL will reject the migration with a constraint violation because existing rows cannot accept null values.
+              </p>
+              <div className="space-y-3 pl-8 border-l-2 border-border/80">
+                <p className="text-xs text-muted-foreground">
+                  <strong>How to tackle it:</strong>
+                </p>
+                <ol className="list-decimal list-inside text-xs text-muted-foreground space-y-2">
+                  <li>
+                    <strong>Define a default value:</strong> Always supply a default fallback directly in your Drizzle schema, e.g. <code className="font-mono bg-muted px-1 rounded">.default("default_val")</code> or <code className="font-mono bg-muted px-1 rounded">.default(0)</code>.
+                  </li>
+                  <li>
+                    <strong>Three-Step Migration (No default):</strong>
+                    <ul className="list-disc list-inside pl-5 mt-1 space-y-1">
+                      <li>Generate a migration adding the column as <strong>nullable</strong> first.</li>
+                      <li>Run an SQL update script to populate values for existing rows.</li>
+                      <li>Generate a final migration altering the column to enforce <code className="font-mono">NOT NULL</code>.</li>
+                    </ul>
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            {/* Scenario 2 */}
+            <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4 shadow-xs">
+              <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-destructive/10 text-destructive text-xs font-bold">2</span>
+                Data Loss Risk During Migration Rollbacks
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <strong>The Issue:</strong> Running <code className="font-mono text-xs text-primary">pnpm db:rollback</code> drops the tables or columns created by the target migration. If this command is executed in staging or production, any data stored in those columns will be permanently deleted.
+              </p>
+              <div className="space-y-3 pl-8 border-l-2 border-border/80">
+                <p className="text-xs text-muted-foreground">
+                  <strong>How to tackle it:</strong>
+                </p>
+                <ol className="list-decimal list-inside text-xs text-muted-foreground space-y-2">
+                  <li>
+                    <strong>Execute Backup:</strong> Always perform a snapshot backup using database utilities (e.g., <code className="font-mono bg-muted px-1">pg_dump</code>) prior to performing rollbacks.
+                  </li>
+                  <li>
+                    <strong>Avoid Rollbacks in Production:</strong> Prefer "roll-forward" actions. If you need to revert a change in production, generate a brand new migration file that safely deletes the column or drops the table, allowing for data migration steps before the drop.
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            {/* Scenario 3 */}
+            <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4 shadow-xs">
+              <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-destructive/10 text-destructive text-xs font-bold">3</span>
+                Database Table Locks & Connection Timeouts
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <strong>The Issue:</strong> Performing schema alterations (like adding foreign keys or indexes) on large tables locks the table. Active API threads attempting to query this table will hang and timeout, exhausting the database connection pool.
+              </p>
+              <div className="space-y-3 pl-8 border-l-2 border-border/80">
+                <p className="text-xs text-muted-foreground">
+                  <strong>How to tackle it:</strong>
+                </p>
+                <ol className="list-decimal list-inside text-xs text-muted-foreground space-y-2">
+                  <li>
+                    <strong>Create Indexes Concurrently:</strong> For high-traffic tables, edit the generated SQL file manually to apply indexes concurrently: <code className="font-mono bg-muted px-1">CREATE INDEX CONCURRENTLY</code>.
+                  </li>
+                  <li>
+                    <strong>Schedule Off-Peak Hours:</strong> Apply intensive migrations when database workload is lowest.
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            {/* Scenario 4 */}
+            <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4 shadow-xs">
+              <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-destructive/10 text-destructive text-xs font-bold">4</span>
+                Out-of-Sync Migration Metadata Table
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <strong>The Issue:</strong> If a local migration SQL file is modified after it has already been applied, the database's internal metadata tracking table (<code className="font-mono">drizzle.__drizzle_migrations</code>) will mismatch and block future deployments.
+              </p>
+              <div className="space-y-3 pl-8 border-l-2 border-border/80">
+                <p className="text-xs text-muted-foreground">
+                  <strong>How to tackle it:</strong>
+                </p>
+                <ol className="list-decimal list-inside text-xs text-muted-foreground space-y-2">
+                  <li>
+                    <strong>Diagnose Status:</strong> Run <code className="font-mono bg-muted px-1 text-primary">pnpm db:status</code> to isolate exactly which migration checksum is failing.
+                  </li>
+                  <li>
+                    <strong>Manually Adjust Checksum:</strong> If the database and schema are physically identical, update the failing checksum row in the <code className="font-mono">drizzle.__drizzle_migrations</code> table, or delete the record of the target migration and run `db:migrate` again.
+                  </li>
+                </ol>
+              </div>
+            </div>
           </div>
         </section>
 

@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",
-    "build:cf": "next-on-pages",
-    "deploy:cf": "wrangler pages deploy .vercel/output/static",
+    "build:cf": "opennextjs-cloudflare",
+    "deploy:cf": "wrangler pages deploy .open-next/.deploy",
     "deploy:vercel": "vercel",
     "start": "next start --port 3000",
     "typecheck": "tsc --noEmit"
@@ -24,7 +24,7 @@
     "tailwind-merge": "2.6.1"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.7",
+    "@opennextjs/cloudflare": "^1.20.1",
     "@tailwindcss/postcss": "4.3.2",
     "@types/node": "22.20.0",
     "@types/react": "19.2.17",

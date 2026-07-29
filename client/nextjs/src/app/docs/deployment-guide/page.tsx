@@ -188,7 +188,7 @@ export default function DeploymentGuidePage() {
             <div>
               <h2 className="text-2xl font-bold text-foreground">Deploying Next.js Frontend to Cloudflare Pages</h2>
               <p className="text-xs text-muted-foreground">
-                Deploying serverless Next.js edge assets using <code className="text-amber-500 font-mono text-xs">@cloudflare/next-on-pages</code>.
+                Deploying Next.js edge assets using the modern, officially recommended <code className="text-amber-500 font-mono text-xs">@opennextjs/cloudflare</code> adapter.
               </p>
             </div>
           </div>
@@ -197,16 +197,16 @@ export default function DeploymentGuidePage() {
             <h3 className="font-bold text-foreground text-lg">Build & Deploy Commands</h3>
             <div className="rounded-xl border border-border/40 bg-muted/40 dark:bg-black/40 p-4 font-mono text-xs text-foreground space-y-4">
               <div>
-                <span className="text-amber-500 font-bold"># Step 1: Build Next.js for Cloudflare Pages</span>
+                <span className="text-amber-500 font-bold"># Step 1: Build Next.js for Cloudflare Pages (OpenNext)</span>
                 <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm build:web:cf</pre>
               </div>
               <div>
-                <span className="text-amber-500 font-bold"># Step 2: Deploy output to Cloudflare Pages</span>
+                <span className="text-amber-500 font-bold"># Step 2: Deploy compiled output (.open-next/.deploy) to Cloudflare</span>
                 <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm deploy:web:cf</pre>
               </div>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Ensure <code className="text-foreground font-mono text-xs">nodejs_compat</code> compatibility flag is enabled in your Cloudflare Pages project settings under <strong>Settings &gt; Functions &gt; Compatibility flags</strong>.
+              Ensure the <code className="text-foreground font-mono text-xs">nodejs_compat</code> compatibility flag is enabled in your Cloudflare Pages project settings under <strong>Settings &gt; Functions &gt; Compatibility flags</strong>.
             </p>
           </div>
         </section>
