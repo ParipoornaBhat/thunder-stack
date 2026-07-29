@@ -9,6 +9,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "THUNDER Stack",
   description: "Advanced RBAC user management system.",
+  icons: {
+    icon: "/logos/favicon.png",
+    shortcut: "/logos/favicon.png",
+    apple: "/logos/favicon.png",
+  },
 };
 
 export default function RootLayout({
