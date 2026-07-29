@@ -163,6 +163,28 @@ pnpm run db:seed
 
 ---
 
+## 🌐 Production Deployment
+
+### 1. Vercel Web Dashboard (Frontend)
+1. Import repository into [Vercel](https://vercel.com/new).
+2. Set **Root Directory**: `./` (Root) so Vercel reads the root `vercel.json`.
+3. Add **Environment Variable**: `NEXT_PUBLIC_IS_DOCS_ONLY = true` (for Docs Site) or `false` (for Full App).
+4. Click **Deploy**.
+
+### 2. Cloudflare Pages (Frontend)
+```bash
+pnpm build:web:cf
+pnpm deploy:web:cf
+```
+
+### 3. Cloudflare Workers (Backend Hono)
+```bash
+npx wrangler secret put DATABASE_URL --cwd server/hono
+pnpm deploy:server
+```
+
+---
+
 ## 🧹 Utilities
 
 *   **Clean build/cache folders**:

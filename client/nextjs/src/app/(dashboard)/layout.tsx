@@ -57,6 +57,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  const isDocsOnly = process.env.NEXT_PUBLIC_IS_DOCS_ONLY === "true";
+
   const fetchProfile = async () => {
     try {
       const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4000";
@@ -71,7 +73,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       if (res.ok) {
         const data = await res.json();
         setProfile(data);
-      } else if (res.status === 401) {
+      } else if (res.status === 401 && !isDocsOnly) {
         await signOut();
         router.replace("/login");
       }
@@ -81,12 +83,67 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   };
 
   useEffect(() => {
-    if (!isPending && !session) {
-      router.replace("/login");
-    } else if (session) {
-      fetchProfile();
+    if (!isDocsOnly) {
+      if (!isPending && !session) {
+        router.replace("/login");
+      } else if (session) {
+        fetchProfile();
+      }
     }
-  }, [session, isPending]);
+  }, [session, isPending, isDocsOnly]);
+
+  if (isDocsOnly) {
+    return (
+      <div className="flex h-screen w-screen flex-col bg-background selection:bg-primary/30">
+        <header className="border-b border-border/40 bg-background/80 backdrop-blur-xl px-6 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="relative h-9 w-9 shrink-0">
+              <Image src="/logos/thunder.png" alt="Logo" fill className="object-contain" />
+            </div>
+            <span className="text-lg font-extrabold text-foreground">THUNDER Stack</span>
+          </Link>
+          <div className="flex items-center gap-3">
+            <Link href="/docs" className="text-xs font-semibold text-muted-foreground hover:text-foreground">Docs</Link>
+            <Link href="/docs/db-guide" className="text-xs font-semibold text-muted-foreground hover:text-foreground">DB Guide</Link>
+            <ThemeToggle />
+          </div>
+        </header>
+
+        <div className="flex-1 flex items-center justify-center p-6">
+          <div className="max-w-md w-full p-8 rounded-3xl border border-border/50 bg-card text-center space-y-6 shadow-xl">
+            <div className="p-4 w-fit mx-auto rounded-2xl bg-primary/10 text-primary border border-primary/20">
+              <LayoutDashboard className="h-8 w-8 text-primary" />
+            </div>
+            <div className="space-y-2">
+              <h2 className="text-2xl font-extrabold text-foreground">User Dashboard</h2>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                This live deployment is running in <strong>Docs-Only Mode</strong>. To test the active RBAC Dashboard, User Profile Switcher, and Permission Management with a live database, run:
+              </p>
+            </div>
+            <div className="rounded-2xl border border-border/50 bg-muted/40 p-3 font-mono text-xs text-primary font-bold">
+              npx create-thunder-app
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Link
+                href="/docs"
+                className="flex-1 py-2.5 px-4 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all"
+              >
+                Explore Docs
+              </Link>
+              <Link
+                href="/docs/db-guide"
+                className="flex-1 py-2.5 px-4 rounded-xl border border-border bg-background text-foreground text-xs font-semibold hover:bg-accent transition-all"
+              >
+                DB Guide
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <SiteFooter />
+      </div>
+    );
+  }
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

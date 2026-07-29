@@ -17,6 +17,43 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const isDocsOnly = process.env.NEXT_PUBLIC_IS_DOCS_ONLY === "true";
+
+  if (isDocsOnly) {
+    return (
+      <div className="flex w-full items-center justify-center bg-background min-h-[calc(100vh-160px)] px-4 py-12">
+        <div className="max-w-md w-full p-8 rounded-3xl border border-border/50 bg-card text-center space-y-6 shadow-lg">
+          <div className="p-4 w-fit mx-auto rounded-2xl bg-primary/10 text-primary border border-primary/20">
+            <Loader2 className="h-8 w-8 text-primary" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-extrabold text-foreground">Documentation Site Mode</h2>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              This deployment is running in <strong>Docs-Only Mode</strong> for the npm registry & showcase. To run full authentication, user registration, and database sessions locally, run:
+            </p>
+          </div>
+          <div className="rounded-2xl border border-border/50 bg-muted/40 p-3 font-mono text-xs text-primary font-bold">
+            npx create-thunder-app
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <Link
+              href="/docs"
+              className="flex-1 py-2.5 px-4 rounded-xl bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all"
+            >
+              Explore Docs
+            </Link>
+            <Link
+              href="/docs/db-guide"
+              className="flex-1 py-2.5 px-4 rounded-xl border border-border bg-background text-foreground text-xs font-semibold hover:bg-accent transition-all"
+            >
+              DB Guide
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !password) {
