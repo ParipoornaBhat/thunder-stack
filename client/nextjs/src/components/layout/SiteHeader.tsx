@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Database, Cloud, LayoutDashboard, LogOut, Moon, Sun, Github } from "lucide-react";
+import { BookOpen, Database, Cloud, LayoutDashboard, LogOut, Moon, Sun, Github, Package } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -146,15 +146,26 @@ export function SiteHeader() {
 
           {/* GitHub / NPM Badge or Auth Buttons */}
           {isDocsOnly ? (
-            <a
-              href="https://github.com/ParipoornaBhat/thunder-stack"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-muted/80 border border-border/50 px-4 text-xs font-semibold text-foreground hover:bg-accent transition-all"
-            >
-              <Github className="h-4 w-4" />
-              <span className="hidden sm:inline">v1.0 Docs</span>
-            </a>
+            <div className="flex items-center gap-2">
+              <a
+                href="https://github.com/ParipoornaBhat/thunder-stack"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-muted/80 border border-border/50 px-4 text-xs font-semibold text-foreground hover:bg-accent transition-all animate-fade-in"
+              >
+                <Github className="h-4 w-4" />
+                <span className="hidden sm:inline">GitHub</span>
+              </a>
+              <a
+                href="https://www.npmjs.com/package/create-thunder-stack"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-muted/80 border border-border/50 px-4 text-xs font-semibold text-foreground hover:bg-accent transition-all animate-fade-in"
+              >
+                <Package className="h-4 w-4 text-red-500 animate-pulse" />
+                <span className="hidden sm:inline">NPM Package</span>
+              </a>
+            </div>
           ) : (
             !isPending &&
               (user ? (
