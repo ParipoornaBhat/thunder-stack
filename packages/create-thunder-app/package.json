@@ -1,6 +1,6 @@
 {
   "name": "create-thunder-stack",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Scaffold a new THUNDER Stack cross-platform monorepo application",
   "bin": {
     "create-thunder-stack": "./index.js"
