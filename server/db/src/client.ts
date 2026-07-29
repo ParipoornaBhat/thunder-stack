@@ -6,15 +6,25 @@ let _db: any = null;
 
 function getDb() {
   if (!_db) {
-    const connectionString = process.env.DATABASE_URL || (globalThis as any).DATABASE_URL;
+    let connectionString = process.env.DATABASE_URL || (globalThis as any).DATABASE_URL;
 
     if (!connectionString) {
       throw new Error("DATABASE_URL is not defined in env");
     }
 
+    const hasSSL = connectionString.includes("sslmode=require") || connectionString.includes("ssl=true");
+
+    if (hasSSL) {
+      connectionString = connectionString
+        .replace(/([\?&])sslmode=[^&]*/, "$1")
+        .replace(/([\?&])ssl=[^&]*/, "$1")
+        .replace(/\?&/, "?")
+        .replace(/\?$/, "");
+    }
+
     const pool = new pg.Pool({
       connectionString,
-      ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
+      ssl: hasSSL || process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
       max: 10,
       maxUses: 1,
       idleTimeoutMillis: 1,
