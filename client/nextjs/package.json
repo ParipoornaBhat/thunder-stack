@@ -6,7 +6,7 @@
     "dev": "next dev --port 3000",
     "build": "cross-env NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
     "build:vercel": "next build",
-    "build:cf": "cross-env NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
+    "build:cf": "cross-env NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
     "deploy": "opennextjs-cloudflare deploy",
     "deploy:cf": "opennextjs-cloudflare deploy",
     "deploy:vercel": "vercel",

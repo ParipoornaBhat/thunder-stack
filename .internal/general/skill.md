@@ -199,19 +199,31 @@ In `server/db/src/client.ts`, configure `pg.Pool` specifically for serverless ed
 ## 4. Multi-Cloud Deployment Guide (Cloudflare + Vercel)
 
 ### A. Cloudflare Pages Deployment (Next.js Frontend)
-1. **Build & Deploy Separation (Eliminating Double-Compilation):**
+1. **Build & Deploy Separation & `pnpm run deploy` CLI Fix:**
    - Cloudflare CI natively executes `Build Command` followed by `Deploy Command`.
    - Never write `"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"`.
-   - Configure in `client/nextjs/package.json`:
+   - **Critical PNPM Monorepo Fix (`[ERR_PNPM_INVALID_DEPLOY_TARGET]`):** `pnpm deploy` is a reserved built-in CLI command in pnpm (for isolated deployment directory creation: `pnpm deploy <dir>`). When calling deploy scripts from root monorepo scripts or CI, you **MUST** include `run`:
+     ```json
+     // Root package.json
+     "scripts": {
+       "web:build": "cross-env NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 pnpm --filter nextjs run build:cf",
+       "web:deploy": "pnpm --filter nextjs run deploy",
+       "server:deploy": "cross-env NODE_ENV=production pnpm --filter server run deploy",
+       "deploy:web:cf": "pnpm --filter nextjs run deploy:cf",
+       "deploy:server": "cross-env NODE_ENV=production pnpm --filter server run deploy"
+     }
+     ```
+   - In `client/nextjs/package.json`:
      ```json
      "scripts": {
-       "build": "cross-env NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
-       "deploy": "opennextjs-cloudflare deploy"
+       "build:cf": "cross-env NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
+       "deploy": "opennextjs-cloudflare deploy",
+       "deploy:cf": "opennextjs-cloudflare deploy"
      }
      ```
    - In Cloudflare Dashboard CI:
-     - **Build Command:** `pnpm run build`
-     - **Deploy Command:** `pnpm run deploy`
+     - **Build Command:** `pnpm run build` (or `pnpm run web:build`)
+     - **Deploy Command:** `pnpm run web:deploy` (or `pnpm --filter nextjs run deploy`)
      - **Build Output Directory:** `client/nextjs/.open-next/.deploy`
 
 2. **`NEXT_PUBLIC_*` Build-Time Inlining vs Cloudflare Secrets:**
@@ -274,30 +286,33 @@ In `server/db/src/client.ts`, configure `pg.Pool` specifically for serverless ed
 
 ## 5. Database Layer (Aiven, Supabase, Neon & PostgreSQL SSL)
 
-### A. Aiven & Remote SSL Configuration
-- Aiven PostgreSQL requires encrypted TLS/SSL. The connection string must end with `?sslmode=require`.
-- Cloud instances use intermediate or custom CA certificates. To prevent `Error: self-signed certificate in certificate chain` in serverless workers and container runtimes, normalize the connection string and pass `ssl: { rejectUnauthorized: false }`:
+### A. Aiven & Remote SSL Configuration (Fixing `SELF_SIGNED_CERT_IN_CHAIN`)
+- **The Issue:** When `DATABASE_URL` contains `?sslmode=require` or `?sslmode=no-verify`, `node-postgres` (`pg`) parses that query parameter and silently overrides your `ssl: { rejectUnauthorized: false }` config to `verify-full`. Cloud databases (like Aiven) use custom/self-signed intermediate CA certificates, causing `pg` to reject the TLS connection with `SELF_SIGNED_CERT_IN_CHAIN`, crashing database queries with HTTP 500 on Cloudflare Workers and serverless environments.
+- **The Solution (`server/db/src/client.ts`):** Sanitize the connection string by stripping the `sslmode` query parameter before passing it to `new pg.Pool()`, while explicitly enforcing `ssl: { rejectUnauthorized: false }`:
   ```ts
   // server/db/src/client.ts
-  const isRemote =
-    !connectionString.includes("localhost") &&
-    !connectionString.includes("127.0.0.1") &&
-    !connectionString.includes("0.0.0.0");
+  export function createRequestDb(connectionString: string) {
+    // Strip ?sslmode=... so pg doesn't override rejectUnauthorized: false with verify-full
+    const cleanConnectionString = connectionString
+      .replace(/[\?&]sslmode=[^&]+/g, "")
+      .replace(/[\?&]ssl=[^&]+/g, "")
+      .replace(/\?&/, "?")
+      .replace(/[?&]$/, "");
 
-  const hasSSL =
-    connectionString.includes("sslmode=") ||
-    connectionString.includes("ssl=true") ||
-    isRemote;
+    const pool = new pg.Pool({
+      connectionString: cleanConnectionString,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      max: 1,
+      maxUses: 1,
+      idleTimeoutMillis: 1000,
+      allowExitOnIdle: true,
+    });
 
-  const pool = new pg.Pool({
-    connectionString: cleanConnectionString,
-    ssl: hasSSL || process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
-    max: 10,
-    maxUses: 1,
-    idleTimeoutMillis: 1000,
-    allowExitOnIdle: true,
-    connectionTimeoutMillis: 5000,
-  });
+    const dbInstance = drizzle(pool, { schema });
+    return { db: dbInstance, pool };
+  }
   ```
 
 ### B. Standard Database Commands (Drizzle CLI)
