@@ -12,23 +12,35 @@ function getDb() {
       throw new Error("DATABASE_URL is not defined in env");
     }
 
-    const hasSSL = connectionString.includes("sslmode=require") || connectionString.includes("ssl=true");
+    const isRemote =
+      !connectionString.includes("localhost") &&
+      !connectionString.includes("127.0.0.1") &&
+      !connectionString.includes("0.0.0.0");
 
-    if (hasSSL) {
+    const hasSSL =
+      connectionString.includes("sslmode=") ||
+      connectionString.includes("ssl=true") ||
+      isRemote;
+
+    // Normalize connection string query parameters to prevent pg driver conflicting SSL configurations
+    if (connectionString.includes("sslmode=") || connectionString.includes("ssl=")) {
       connectionString = connectionString
-        .replace(/([\?&])sslmode=[^&]*/, "$1")
-        .replace(/([\?&])ssl=[^&]*/, "$1")
+        .replace(/([\?&])sslmode=[^&]*/g, "$1")
+        .replace(/([\?&])ssl=[^&]*/g, "$1")
         .replace(/\?&/, "?")
-        .replace(/\?$/, "");
+        .replace(/[?&]$/, "");
     }
 
+    // Aiven, Supabase, Neon, and AWS RDS use custom or self-signed intermediate CA certificates
+    // in cloud/serverless environments. Setting rejectUnauthorized: false prevents connection handshake failures.
     const pool = new pg.Pool({
       connectionString,
       ssl: hasSSL || process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
       max: 10,
       maxUses: 1,
-      idleTimeoutMillis: 1,
+      idleTimeoutMillis: 1000,
       allowExitOnIdle: true,
+      connectionTimeoutMillis: 5000,
     });
 
     pool.on("error", (err) => {

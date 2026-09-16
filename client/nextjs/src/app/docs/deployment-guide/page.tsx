@@ -188,13 +188,13 @@ export default function DeploymentGuidePage() {
             <div>
               <h2 className="text-2xl font-bold text-foreground">Deploying Next.js Frontend to Cloudflare Pages</h2>
               <p className="text-xs text-muted-foreground">
-                Deploying Next.js edge assets using the modern, officially recommended <code className="text-amber-500 font-mono text-xs">@opennextjs/cloudflare</code> adapter.
+                Deploying Next.js edge assets using the modern, officially recommended <code className="text-amber-500 font-mono text-xs">@opennextjs/cloudflare</code> adapter with zero double-compilation.
               </p>
             </div>
           </div>
 
           <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4">
-            <h3 className="font-bold text-foreground text-lg">Build & Deploy Commands</h3>
+            <h3 className="font-bold text-foreground text-lg">1. Build & Deploy Commands</h3>
             <div className="rounded-xl border border-border/40 bg-muted/40 dark:bg-black/40 p-4 font-mono text-xs text-foreground space-y-4">
               <div>
                 <span className="text-amber-500 font-bold"># Step 1: Build Next.js for Cloudflare Pages (OpenNext)</span>
@@ -205,9 +205,35 @@ export default function DeploymentGuidePage() {
                 <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm deploy:web:cf</pre>
               </div>
             </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Ensure the <code className="text-foreground font-mono text-xs">nodejs_compat</code> compatibility flag is enabled in your Cloudflare Pages project settings under <strong>Settings &gt; Functions &gt; Compatibility flags</strong>.
-            </p>
+
+            <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 space-y-2 text-xs">
+              <h4 className="font-bold text-foreground flex items-center gap-1.5">
+                <Sparkles className="h-4 w-4 text-amber-500" />
+                <span>Cloudflare Dashboard CI Settings</span>
+              </h4>
+              <p className="text-muted-foreground">
+                In Cloudflare Dashboard CI, configure:
+              </p>
+              <ul className="list-disc list-inside space-y-1 font-mono text-muted-foreground">
+                <li><strong>Build Command:</strong> <code className="text-primary font-bold">pnpm run build</code> (or <code className="text-primary font-bold">pnpm build:web:cf</code>)</li>
+                <li><strong>Deploy Command:</strong> <code className="text-primary font-bold">pnpm run deploy</code> (or <code className="text-primary font-bold">pnpm deploy:web:cf</code>)</li>
+                <li><strong>Build Output Directory:</strong> <code className="text-foreground font-bold">client/nextjs/.open-next/.deploy</code></li>
+              </ul>
+              <p className="text-muted-foreground text-[11px]">
+                Separating the build and deploy commands eliminates double compilation, saving ~60s on every deployment.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-border/40 bg-muted/30 p-4 space-y-2 text-xs">
+              <h4 className="font-bold text-foreground">Build-Time Inlining (`vars` in `wrangler.jsonc`) vs Secrets</h4>
+              <p className="text-muted-foreground leading-relaxed">
+                In Cloudflare CI, encrypted <strong>Secrets</strong> are not passed during Next.js compilation. Store public configuration in <code className="text-primary font-mono">client/nextjs/wrangler.jsonc</code> under <code className="text-foreground font-mono">"vars"</code>:
+              </p>
+              <pre className="p-3 bg-card rounded-lg font-mono text-[11px] text-foreground border border-border/30 overflow-x-auto">{`"vars": {
+  "NODE_ENV": "production",
+  "NEXT_PUBLIC_SERVER_URL": "https://thunder-server.workers.dev"
+}`}</pre>
+            </div>
           </div>
         </section>
 
@@ -237,6 +263,36 @@ npx wrangler secret put BETTER_AUTH_SECRET --cwd server/hono</pre>
                 <span className="text-orange-500 font-bold"># Step 2: Deploy Backend to Cloudflare Workers</span>
                 <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm deploy:server</pre>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 4: Aiven PostgreSQL & SSL Guide */}
+        <section id="postgres-ssl" className="space-y-6 mb-20 scroll-mt-28">
+          <div className="flex items-center gap-3">
+            <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500">
+              <Layers className="h-6 w-6" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">PostgreSQL & Aiven SSL Configuration</h2>
+              <p className="text-xs text-muted-foreground">
+                Connecting Drizzle ORM to Aiven, Supabase, Neon, or AWS RDS with zero TLS/CA errors.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4">
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Cloud PostgreSQL providers like <strong>Aiven</strong> require encrypted TLS/SSL connections. Ensure your connection string ends with <code className="text-primary font-mono font-bold">?sslmode=require</code>:
+            </p>
+            <pre className="p-3 bg-muted/50 rounded-xl font-mono text-xs text-foreground border border-border/40 select-all overflow-x-auto">
+              DATABASE_URL="postgres://avnadmin:PASSWORD@host.aivencloud.com:PORT/defaultdb?sslmode=require"
+            </pre>
+            <div className="rounded-xl border border-border/40 bg-muted/20 p-4 space-y-2 text-xs text-muted-foreground">
+              <h4 className="font-bold text-foreground">Custom CA Certificates & Serverless Workers</h4>
+              <p>
+                Thunder Stack's database client (<code className="font-mono text-foreground">server/db/src/client.ts</code>) automatically strips query parameters and applies <code className="font-mono text-primary font-bold">ssl: &#123; rejectUnauthorized: false &#125;</code> for remote connections. This avoids <code className="font-mono text-destructive">Error: self-signed certificate in certificate chain</code> issues in Cloudflare Workers and container runtimes while maintaining TLS encryption.
+              </p>
             </div>
           </div>
         </section>

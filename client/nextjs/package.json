@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "next build",
-    "build:cf": "opennextjs-cloudflare",
-    "deploy:cf": "wrangler pages deploy .open-next/.deploy",
+    "build": "cross-env NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
+    "build:vercel": "next build",
+    "build:cf": "cross-env NEXT_TELEMETRY_DISABLED=1 opennextjs-cloudflare build",
+    "deploy": "opennextjs-cloudflare deploy",
+    "deploy:cf": "opennextjs-cloudflare deploy",
     "deploy:vercel": "vercel",
     "start": "next start --port 3000",
     "typecheck": "tsc --noEmit"
@@ -29,6 +31,7 @@
     "@types/node": "22.20.0",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
+    "cross-env": "^10.1.0",
     "postcss": "8.5.16",
     "tailwindcss": "4.3.2",
     "typescript": "5.9.3"

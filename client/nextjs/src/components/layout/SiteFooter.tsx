@@ -28,9 +28,19 @@ export function SiteFooter() {
                     className="object-contain"
                   />
                 </div>
-                <span className="text-lg sm:text-xl font-extrabold tracking-tight text-foreground">
-                  THUNDER <span className="text-primary transition-colors">Stack</span>
-                </span>
+                <>
+                  <style>{`
+                    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+                    .footer-cursive-logo {
+                      font-family: 'Dancing Script', cursive;
+                      font-size: 2.2rem;
+                      line-height: 1;
+                    }
+                  `}</style>
+                  <span className="footer-cursive-logo text-amber-500 font-bold">
+                    Paripoorna B.
+                  </span>
+                </>
               </Link>
             </div>
             <p className="text-muted-foreground max-w-sm mx-auto md:mx-0 mb-4 leading-relaxed text-sm text-center md:text-left">

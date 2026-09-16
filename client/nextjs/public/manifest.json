@@ -1,21 +1,19 @@
 {
-  "name": "NETS",
-  "short_name": "NETS",
-  "description": "College Event Management System — NMAMIT",
+  "name": "THUNDER Stack",
+  "short_name": "THUNDER",
+  "description": "Production-grade Full-Stack Monorepo Template with Next.js 15, Hono, Drizzle ORM, and Expo 54.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
-  "orientation": "portrait-primary",
+  "background_color": "#09090b",
+  "theme_color": "#f59e0b",
   "icons": [
     {
       "src": "/logos/thunder.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "/logos/flcLogo.png",
+      "src": "/logos/thunder.png",
       "sizes": "512x512",
       "type": "image/png"
     }

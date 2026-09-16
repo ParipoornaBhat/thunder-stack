@@ -3,17 +3,24 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Toaster } from "sonner";
+import { SmoothScroll } from "~/components/SmoothScroll";
+import { AppProvider } from "~/context/AppContext";
+import { siteConfig } from "~/config/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "THUNDER Stack",
-  description: "Advanced RBAC user management system.",
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
   icons: {
     icon: "/logos/favicon.png",
     shortcut: "/logos/favicon.png",
     apple: "/logos/favicon.png",
   },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -24,13 +31,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased`}>
+        <SmoothScroll />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AppProvider>
+            {children}
+          </AppProvider>
           <Toaster position="top-right" richColors closeButton />
         </ThemeProvider>
       </body>

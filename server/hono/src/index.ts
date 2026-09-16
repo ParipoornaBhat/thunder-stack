@@ -35,6 +35,8 @@ import type { Env } from "./lib/permissions.js";
 
 import { getCookie } from "hono/cookie";
 
+import { publicCache } from "./lib/cache.js";
+
 const app = new Hono<Env>();
 
 // Middleware to sync Wrangler environment bindings to process.env at request time
@@ -71,7 +73,7 @@ app.use(
   })
 );
 
-app.get("/health", (c) => {
+app.get("/health", publicCache(30, 120), (c) => {
   return c.json({
     status: "ok",
     service: "thunder-server",

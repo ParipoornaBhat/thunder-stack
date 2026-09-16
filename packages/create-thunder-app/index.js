@@ -106,6 +106,7 @@ async function main() {
     '.git',
     'pnpm-lock.yaml',
     '.env',
+    '.internal',
     'create-thunder-app', // Ignore this package directory itself
     'create-thunder-stack', // Ignore renamed package directory itself
   ];
