@@ -74,7 +74,7 @@ const getAuth = () => {
               try {
                 if (createdUser.email === "admin@thunder.com") {
                   const adminRole = await db.query.role.findFirst({
-                    where: (r, { eq }) => eq(r.name, "admin"),
+                    where: (r: any, { eq }: any) => eq(r.name, "admin"),
                   });
                   if (adminRole) {
                     await db.insert(userRole).values({
@@ -88,7 +88,7 @@ const getAuth = () => {
 
                 if (createdUser.email === "user@thunder.com") {
                   const defaultRole = await db.query.role.findFirst({
-                    where: (r, { eq }) => eq(r.name, "user"),
+                    where: (r: any, { eq }: any) => eq(r.name, "user"),
                   });
                   if (defaultRole) {
                     await db.insert(userRole).values({
@@ -105,7 +105,7 @@ const getAuth = () => {
                 const targetRoleName = isFirstUser ? "admin" : "user";
                 
                 const dbRole = await db.query.role.findFirst({
-                  where: (r, { eq }) => eq(r.name, targetRoleName),
+                  where: (r: any, { eq }: any) => eq(r.name, targetRoleName),
                 });
                 
                 if (dbRole) {
@@ -128,7 +128,7 @@ const getAuth = () => {
 };
 
 export const auth = new Proxy({} as any, {
-  get(target, prop, receiver) {
+  get(target: any, prop: any, receiver: any) {
     const instance = getAuth();
     const value = Reflect.get(instance, prop, receiver);
     if (typeof value === "function") {
@@ -136,7 +136,7 @@ export const auth = new Proxy({} as any, {
     }
     return value;
   },
-  set(target, prop, value, receiver) {
+  set(target: any, prop: any, value: any, receiver: any) {
     const instance = getAuth();
     return Reflect.set(instance, prop, value, receiver);
   }

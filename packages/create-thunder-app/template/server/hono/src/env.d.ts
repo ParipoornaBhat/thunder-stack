@@ -25,9 +25,14 @@ declare module "hono" {
     env?: any;
     req: {
       raw: any;
+      method: string;
       query: (key?: string) => string | undefined;
       header: (name?: string) => string | undefined;
+      json: () => Promise<any>;
+      param: (key?: string) => any;
     };
+    res: any;
+    header: (name: string, value: string) => void;
     json: (data: any, status?: number) => any;
     redirect: (url: string, status?: number) => any;
     set: (key: string, value: any) => void;
@@ -70,6 +75,7 @@ declare module "better-auth" {
 declare module "better-auth/*" {
   export const drizzleAdapter: (db: any, options: any) => any;
   export const emailOTP: (options: any) => any;
+  export const hashPassword: (password: string) => Promise<string>;
 }
 
 declare module "@thunder/db" {
@@ -81,6 +87,8 @@ declare module "@thunder/db" {
   export const userRole: any;
   export const role: any;
   export const authService: any;
+  export const userService: any;
+  export const roleService: any;
 }
 
 declare module "nodemailer" {
