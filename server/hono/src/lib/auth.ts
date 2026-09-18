@@ -16,7 +16,7 @@ const getAuth = () => {
     _auth = betterAuth({
       plugins: [
         emailOTP({
-          async sendVerificationOTP({ email, otp }) {
+          async sendVerificationOTP({ email, otp }: { email: string; otp: string }) {
             await sendOTP(email, otp);
           },
         }),
@@ -70,7 +70,7 @@ const getAuth = () => {
       databaseHooks: {
         user: {
           create: {
-            after: async (createdUser) => {
+            after: async (createdUser: any) => {
               try {
                 if (createdUser.email === "admin@thunder.com") {
                   const adminRole = await db.query.role.findFirst({

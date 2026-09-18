@@ -21,18 +21,33 @@ declare const process: {
 };
 
 declare module "hono" {
-  export class Hono<E = any> {
-    use(...args: any[]): any;
-    get(...args: any[]): any;
-    post(...args: any[]): any;
-    put(...args: any[]): any;
-    patch(...args: any[]): any;
-    delete(...args: any[]): any;
-    on(...args: any[]): any;
-    route(...args: any[]): any;
+  export interface Context<E = any> {
+    env?: any;
+    req: {
+      raw: any;
+      query: (key?: string) => string | undefined;
+      header: (name?: string) => string | undefined;
+    };
+    json: (data: any, status?: number) => any;
+    redirect: (url: string, status?: number) => any;
+    set: (key: string, value: any) => void;
+    get: (key: string) => any;
   }
-  export type Context<E = any> = any;
   export type Next = () => Promise<void>;
+  export type Handler<E = any> = (c: Context<E>, next: Next) => any;
+  export type MiddlewareHandler<E = any> = (c: Context<E>, next: Next) => any;
+
+  export class Hono<E = any> {
+    use(path: string, ...handlers: (MiddlewareHandler<E> | any)[]): this;
+    use(...handlers: (MiddlewareHandler<E> | any)[]): this;
+    get(path: string, ...handlers: (Handler<E> | any)[]): this;
+    post(path: string, ...handlers: (Handler<E> | any)[]): this;
+    put(path: string, ...handlers: (Handler<E> | any)[]): this;
+    patch(path: string, ...handlers: (Handler<E> | any)[]): this;
+    delete(path: string, ...handlers: (Handler<E> | any)[]): this;
+    on(methods: string | string[], path: string, ...handlers: (Handler<E> | any)[]): this;
+    route(path: string, app: any): this;
+  }
 }
 
 declare module "hono/cors" {

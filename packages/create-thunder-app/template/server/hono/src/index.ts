@@ -57,7 +57,7 @@ app.use("*", logger());
 app.use(
   "*",
   cors({
-    origin: (origin) => {
+    origin: (origin: string | undefined) => {
       const allowedOrigins = [...getClientUrls(), getServerUrl()];
       if (!origin) return allowedOrigins[0] || "*";
       if (allowedOrigins.includes(origin)) return origin;
