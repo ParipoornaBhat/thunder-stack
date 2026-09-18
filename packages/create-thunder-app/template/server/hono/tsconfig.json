@@ -5,8 +5,7 @@
     "moduleResolution": "NodeNext",
     "strict": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "types": ["@cloudflare/workers-types", "node"]
+    "esModuleInterop": true
   },
   "include": ["src/**/*"]
 }

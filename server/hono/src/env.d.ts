@@ -1,5 +1,5 @@
-declare namespace NodeJS {
-  interface ProcessEnv {
+declare const process: {
+  env: {
     SERVER_URL?: string;
     BETTER_AUTH_URL?: string;
     BETTER_AUTH_SECRET?: string;
@@ -17,5 +17,5 @@ declare namespace NodeJS {
     SMTP_NAME?: string;
     NODE_ENV?: string;
     [key: string]: string | undefined;
-  }
-}
+  };
+};
