@@ -1,0 +1,41 @@
+{
+  "name": "thunder-stack",
+  "version": "1.0.3",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.17.0",
+  "scripts": {
+    "prepare": "node scripts/setup-env.js",
+    "dev": "pnpm db:seed && turbo run dev",
+    "build": "turbo run build",
+    "web:build": "cross-env NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 pnpm --filter nextjs run build:cf",
+    "web:deploy": "pnpm --filter nextjs run deploy",
+    "server:deploy": "cross-env NODE_ENV=production pnpm --filter server run deploy",
+    "build:web:cf": "cross-env NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 pnpm --filter nextjs run build:cf",
+    "deploy:server": "cross-env NODE_ENV=production pnpm --filter server run deploy",
+    "deploy:web:vercel": "pnpm --filter nextjs run deploy:vercel",
+    "deploy:web:cf": "pnpm --filter nextjs run deploy:cf",
+    "start": "turbo run start --filter=!mobile",
+    "typecheck": "turbo run typecheck",
+    "db:generate": "pnpm --filter @thunder/db db:generate",
+    "db:migrate": "pnpm --filter @thunder/db db:migrate",
+    "db:seed": "pnpm --filter @thunder/db db:seed",
+    "db:reset": "pnpm --filter @thunder/db db:reset",
+    "db:rollback": "pnpm --filter @thunder/db db:rollback",
+    "db:status": "pnpm --filter @thunder/db db:status",
+    "db:help": "pnpm --filter @thunder/db db:help",
+    "db:push": "pnpm --filter @thunder/db db:push",
+    "db:studio": "pnpm --filter @thunder/db db:studio",
+    "migrate:generate": "pnpm --filter @thunder/db db:generate --name",
+    "migrate:deploy": "pnpm --filter @thunder/db db:migrate",
+    "clean": "node scripts/clean.js",
+    "clean:install": "node scripts/clean.js && pnpm install",
+    "ci": "pnpm run clean:install",
+    "native": "cross-env EXPO_NO_METRO_LAZY=1 pnpm --filter mobile start --clear"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "next": "15.5.20",
+    "turbo": "2.10.4"
+  }
+}

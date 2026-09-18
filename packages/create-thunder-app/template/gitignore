@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Build and Caches
+dist/
+build/
+.next/
+.open-next/
+.expo/
+.turbo/
+.wrangler/
+.next-env.d.ts
+out/
+
+# Environment Variables & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.dev.vars
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local databases
+*.db
+*.db-journal

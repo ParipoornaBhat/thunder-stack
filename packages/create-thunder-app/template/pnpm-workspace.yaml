@@ -1,0 +1,26 @@
+packages:
+  - "client/*"
+  - "server/*"
+  - "packages/*"
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
+
+minimumReleaseAgeExclude:
+  - miniflare@4.20260722.1
+  - wrangler@4.115.0
+
+overrides:
+  glob: "10.4.5"
+  rimraf: "^5.0.10"
+  uuid: "9.0.0"
+  node-domexception: "npm:empty-npm-package@1.0.0"
+
+allowedDeprecatedVersions:
+  "@esbuild-kit/core-utils": "*"
+  "@esbuild-kit/esm-loader": "*"
+  "node-domexception": "*"
+  "glob": "*"
+  "uuid": "*"
