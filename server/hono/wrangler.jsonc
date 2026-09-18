@@ -17,7 +17,6 @@
     "NODE_ENV": "development",
     "CLIENT_URL": "http://localhost:3000",
     "NEXT_PUBLIC_SERVER_URL": "http://localhost:4000",
-    "EXPO_PUBLIC_SERVER_URL": "http://localhost:4000",
-    "NEXT_PUBLIC_IS_DOCS_ONLY": "\"false\" # Set to true for live Docs site deployments (Vercel/Cloudflare)"
+    "EXPO_PUBLIC_SERVER_URL": "http://localhost:4000"
   }
 }

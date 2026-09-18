@@ -19,7 +19,7 @@ export const getClientUrls = (): string[] => {
  * Enforces a single URL even if comma-separated values are accidentally passed.
  */
 export const getServerUrl = (): string => {
-  const raw = process.env.BETTER_AUTH_URL || (globalThis as any).BETTER_AUTH_URL || "http://localhost:4000";
+  const raw = process.env.SERVER_URL || process.env.BETTER_AUTH_URL || (globalThis as any).SERVER_URL || (globalThis as any).BETTER_AUTH_URL || "http://localhost:4000";
   const firstUrl = raw.split(",")[0].trim();
   return firstUrl.replace(/\/+$/, "");
 };

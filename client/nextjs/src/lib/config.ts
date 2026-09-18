@@ -4,7 +4,7 @@
  * if NEXT_PUBLIC_SERVER_URL was omitted during CI build time.
  */
 export function getServerUrl(): string {
-  const envUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+  const envUrl = process.env.NEXT_PUBLIC_SERVER_URL || process.env.SERVER_URL;
   if (typeof window !== "undefined") {
     const hostname = window.location.hostname;
     // If deployed on production/staging domain but env is missing or points to localhost:

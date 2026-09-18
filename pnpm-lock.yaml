@@ -212,6 +212,9 @@ importers:
       '@cloudflare/workers-types':
         specifier: ^5.20260706.1
         version: 5.20260708.1
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.20.0
       '@types/nodemailer':
         specifier: ^6.4.14
         version: 6.4.24

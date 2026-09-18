@@ -11,7 +11,9 @@ const rootEnvExample = path.join(rootDir, ".env.example");
 const envConfigFile = path.join(rootDir, "env.config.json");
 const serverDevVars = path.join(rootDir, "server", "hono", ".dev.vars");
 const serverWrangler = path.join(rootDir, "server", "hono", "wrangler.jsonc");
+const clientWrangler = path.join(rootDir, "client", "nextjs", "wrangler.jsonc");
 const templateServerWrangler = path.join(rootDir, "packages", "create-thunder-app", "template", "server", "hono", "wrangler.jsonc");
+const templateClientWrangler = path.join(rootDir, "packages", "create-thunder-app", "template", "client", "nextjs", "wrangler.jsonc");
 
 console.log("⚙️  Syncing environment variables & Wrangler vars...");
 
@@ -100,6 +102,7 @@ function parseEnv(filePath) {
 // 4. Load or initialize env.config.json
 let envConfig = {
   NODE_ENV: false,
+  SERVER_URL: false,
   CLIENT_URL: false,
   NEXT_PUBLIC_SERVER_URL: false,
   EXPO_PUBLIC_SERVER_URL: false,
@@ -127,6 +130,14 @@ if (fs.existsSync(envConfigFile)) {
 
 // 5. Detect all keys in .env and .env.example
 const parsedEnv = { ...parseEnv(rootEnvExample), ...parseEnv(rootEnv) };
+
+// Automatically derive framework-specific server URLs from unified SERVER_URL if provided
+if (parsedEnv.SERVER_URL) {
+  parsedEnv.NEXT_PUBLIC_SERVER_URL = parsedEnv.NEXT_PUBLIC_SERVER_URL || parsedEnv.SERVER_URL;
+  parsedEnv.EXPO_PUBLIC_SERVER_URL = parsedEnv.EXPO_PUBLIC_SERVER_URL || parsedEnv.SERVER_URL;
+  parsedEnv.BETTER_AUTH_URL = parsedEnv.BETTER_AUTH_URL || parsedEnv.SERVER_URL;
+}
+
 let configUpdated = false;
 
 for (const key of Object.keys(parsedEnv)) {
@@ -144,7 +155,7 @@ if (configUpdated || !fs.existsSync(envConfigFile)) {
 }
 
 // 6. Update wrangler.jsonc with non-sensitive (public) vars
-function updateWranglerVars(wranglerPath) {
+function updateWranglerVars(wranglerPath, allowedKeys) {
   if (!fs.existsSync(wranglerPath)) return;
   try {
     const raw = fs.readFileSync(wranglerPath, "utf8");
@@ -153,6 +164,7 @@ function updateWranglerVars(wranglerPath) {
 
     for (const [key, isSensitive] of Object.entries(envConfig)) {
       if (key.startsWith("$")) continue;
+      if (allowedKeys && !allowedKeys.includes(key)) continue;
       if (!isSensitive) {
         if (key in parsedEnv) {
           nonSensitiveVars[key] = parsedEnv[key];
@@ -163,7 +175,7 @@ function updateWranglerVars(wranglerPath) {
     }
 
     parsed.vars = {
-      NODE_ENV: nonSensitiveVars.NODE_ENV || "development",
+      NODE_ENV: nonSensitiveVars.NODE_ENV || (parsed.vars && parsed.vars.NODE_ENV) || "development",
       ...nonSensitiveVars,
     };
 
@@ -173,7 +185,9 @@ function updateWranglerVars(wranglerPath) {
   }
 }
 
-updateWranglerVars(serverWrangler);
-updateWranglerVars(templateServerWrangler);
+updateWranglerVars(serverWrangler, ["NODE_ENV", "CLIENT_URL", "EXPO_PUBLIC_SERVER_URL", "NEXT_PUBLIC_SERVER_URL"]);
+updateWranglerVars(templateServerWrangler, ["NODE_ENV", "CLIENT_URL", "EXPO_PUBLIC_SERVER_URL", "NEXT_PUBLIC_SERVER_URL"]);
+updateWranglerVars(clientWrangler, ["NODE_ENV", "NEXT_PUBLIC_IS_DOCS_ONLY", "NEXT_PUBLIC_SERVER_URL"]);
+updateWranglerVars(templateClientWrangler, ["NODE_ENV", "NEXT_PUBLIC_IS_DOCS_ONLY", "NEXT_PUBLIC_SERVER_URL"]);
 
 console.log("✅ Environment & Wrangler vars successfully synchronized.");
