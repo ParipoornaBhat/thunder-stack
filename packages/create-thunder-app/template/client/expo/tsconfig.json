@@ -11,5 +11,5 @@
     "strict": true,
     "target": "ESNext"
   },
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["src/**/*", "**/*.ts", "**/*.tsx", "**/*.d.ts"]
 }

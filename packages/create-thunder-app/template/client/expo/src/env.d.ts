@@ -9,3 +9,14 @@ declare const process: {
     [key: string]: string | undefined;
   };
 };
+
+declare module "react-native" {
+  export const Platform: any;
+  const _default: any;
+  export default _default;
+}
+
+declare module "expo-constants" {
+  const Constants: any;
+  export default Constants;
+}
