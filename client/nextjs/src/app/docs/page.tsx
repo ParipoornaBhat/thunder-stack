@@ -62,34 +62,34 @@ export default function DocsPage() {
     <div className="flex min-h-screen flex-col bg-background selection:bg-primary/30">
       <SiteHeader />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row gap-12">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-24 md:pb-12">
+        <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
           {/* Sidebar */}
           <aside className="w-full md:w-64 shrink-0 space-y-6">
-            <div className="sticky top-28 space-y-6">
+            <div className="md:sticky md:top-28 space-y-6">
               <div>
-                <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 sm:mb-4">
                   Dedicated Guides
                 </h2>
-                <nav className="space-y-1.5">
+                <nav className="grid grid-cols-2 md:grid-cols-1 gap-2 sm:gap-1.5">
                   <Link
                     href="/docs/db-guide"
-                    className="flex items-center gap-2.5 px-3 py-2 text-sm font-semibold rounded-xl bg-primary/10 text-primary hover:bg-primary/20 transition-all border border-primary/20"
+                    className="flex items-center gap-2.5 px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-primary/10 text-primary hover:bg-primary/20 transition-all border border-primary/20"
                   >
-                    <Database className="h-4 w-4" />
+                    <Database className="h-4 w-4 shrink-0" />
                     Database Guide
                   </Link>
                   <Link
                     href="/docs/deployment-guide"
-                    className="flex items-center gap-2.5 px-3 py-2 text-sm font-semibold rounded-xl bg-sky-500/10 text-sky-500 hover:bg-sky-500/20 transition-all border border-sky-500/20"
+                    className="flex items-center gap-2.5 px-3 py-2 text-xs sm:text-sm font-semibold rounded-xl bg-sky-500/10 text-sky-500 hover:bg-sky-500/20 transition-all border border-sky-500/20"
                   >
-                    <Cloud className="h-4 w-4" />
+                    <Cloud className="h-4 w-4 shrink-0" />
                     Deployment Guide
                   </Link>
                 </nav>
               </div>
 
-              <div>
+              <div className="hidden md:block">
                 <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
                   Stack Overview
                 </h2>
@@ -117,12 +117,12 @@ export default function DocsPage() {
           </aside>
 
           {/* Main Content */}
-          <div className="flex-1 max-w-3xl space-y-12">
-            <div className="space-y-4">
-              <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+          <div className="flex-1 max-w-3xl space-y-8 sm:space-y-12 min-w-0">
+            <div className="space-y-3 sm:space-y-4">
+              <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
                 THUNDER Stack Documentation
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                 Learn how to develop, run, deploy, and scale applications using the THUNDER architecture stack.
               </p>
             </div>
@@ -131,13 +131,13 @@ export default function DocsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Link
                 href="/docs/db-guide"
-                className="group p-5 rounded-2xl border border-border/50 bg-card hover:border-primary/50 transition-all shadow-xs space-y-2 flex flex-col justify-between"
+                className="group p-5 rounded-2xl border border-border/50 bg-card hover:border-primary/50 transition-all shadow-xs space-y-2 flex flex-col justify-between active:scale-[0.99]"
               >
                 <div className="space-y-2">
                   <div className="p-2.5 w-fit rounded-xl bg-primary/10 text-primary">
                     <Database className="h-5 w-5" />
                   </div>
-                  <h3 className="font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-1.5">
+                  <h3 className="font-bold text-foreground group-hover:text-primary transition-colors flex items-center gap-1.5 text-sm sm:text-base">
                     Database & Drizzle Guide
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </h3>
@@ -149,13 +149,13 @@ export default function DocsPage() {
 
               <Link
                 href="/docs/deployment-guide"
-                className="group p-5 rounded-2xl border border-border/50 bg-card hover:border-sky-500/50 transition-all shadow-xs space-y-2 flex flex-col justify-between"
+                className="group p-5 rounded-2xl border border-border/50 bg-card hover:border-sky-500/50 transition-all shadow-xs space-y-2 flex flex-col justify-between active:scale-[0.99]"
               >
                 <div className="space-y-2">
                   <div className="p-2.5 w-fit rounded-xl bg-sky-500/10 text-sky-500">
                     <Cloud className="h-5 w-5" />
                   </div>
-                  <h3 className="font-bold text-foreground group-hover:text-sky-500 transition-colors flex items-center gap-1.5">
+                  <h3 className="font-bold text-foreground group-hover:text-sky-500 transition-colors flex items-center gap-1.5 text-sm sm:text-base">
                     Vercel & Cloudflare Deploy Guide
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </h3>
@@ -168,68 +168,68 @@ export default function DocsPage() {
 
             <div className="h-px bg-border/60" />
 
-            <div className="space-y-12">
+            <div className="space-y-8 sm:space-y-12">
               {sections.map((s) => (
                 <section
                   key={s.title}
                   id={s.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}
-                  className="space-y-4 scroll-mt-28"
+                  className="space-y-3 sm:space-y-4 scroll-mt-28"
                 >
-                  <h2 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2.5">
+                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2.5">
                     <span className="p-2 rounded-xl bg-primary/10 border border-primary/10 text-primary">
-                      <s.icon className="h-5 w-5" />
+                      <s.icon className="h-4 w-4 sm:h-5 sm:w-5" />
                     </span>
                     {s.title}
                   </h2>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                     {s.content}
                   </p>
                 </section>
               ))}
 
               <section id="command-reference" className="space-y-4 scroll-mt-28">
-                <h2 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground flex items-center gap-2.5">
                   <span className="p-2 rounded-xl bg-primary/10 border border-primary/10 text-primary">
-                    <Terminal className="h-5 w-5" />
+                    <Terminal className="h-4 w-4 sm:h-5 sm:w-5" />
                   </span>
                   Command Reference
                 </h2>
                 <div className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                     Execute the following package manager commands in the workspace root to control different services, migrations, deployments, and development modules:
                   </p>
                   <div className="rounded-2xl border border-border/50 bg-muted/20 p-4 font-mono text-xs text-muted-foreground space-y-4 dark:bg-white/5">
                     <div>
-                      <span className="text-primary font-bold"># Start Development Servers (Backend Hono + Web Next.js)</span>
-                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm dev</pre>
+                      <span className="text-primary font-bold text-[11px] sm:text-xs"># Start Development Servers (Backend Hono + Web Next.js)</span>
+                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2.5 rounded-xl border border-border/30 overflow-x-auto text-[11px] sm:text-xs">pnpm dev</pre>
                     </div>
                     <div>
-                      <span className="text-primary font-bold"># Build Next.js Web Client for Production (Vercel)</span>
-                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm build</pre>
+                      <span className="text-primary font-bold text-[11px] sm:text-xs"># Build Next.js Web Client for Production (Vercel)</span>
+                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2.5 rounded-xl border border-border/30 overflow-x-auto text-[11px] sm:text-xs">pnpm build</pre>
                     </div>
                     <div>
-                      <span className="text-primary font-bold"># Build Next.js Web Client for Cloudflare Pages</span>
-                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm build:web:cf</pre>
+                      <span className="text-primary font-bold text-[11px] sm:text-xs"># Build Next.js Web Client for Cloudflare Pages</span>
+                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2.5 rounded-xl border border-border/30 overflow-x-auto text-[11px] sm:text-xs">pnpm build:web:cf</pre>
                     </div>
                     <div>
-                      <span className="text-primary font-bold"># Deploy Hono Backend API to Cloudflare Workers</span>
-                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm deploy:server</pre>
+                      <span className="text-primary font-bold text-[11px] sm:text-xs"># Deploy Hono Backend API to Cloudflare Workers</span>
+                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2.5 rounded-xl border border-border/30 overflow-x-auto text-[11px] sm:text-xs">pnpm deploy:server</pre>
                     </div>
                     <div>
-                      <span className="text-primary font-bold"># Check Migration & DB SSL Health Status</span>
-                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm db:status</pre>
+                      <span className="text-primary font-bold text-[11px] sm:text-xs"># Check Migration & DB SSL Health Status</span>
+                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2.5 rounded-xl border border-border/30 overflow-x-auto text-[11px] sm:text-xs">pnpm db:status</pre>
                     </div>
                     <div>
-                      <span className="text-primary font-bold"># Seed Database (Roles, Permissions, Users)</span>
-                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm db:seed</pre>
+                      <span className="text-primary font-bold text-[11px] sm:text-xs"># Seed Database (Roles, Permissions, Users)</span>
+                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2.5 rounded-xl border border-border/30 overflow-x-auto text-[11px] sm:text-xs">pnpm db:seed</pre>
                     </div>
                     <div>
-                      <span className="text-primary font-bold"># Apply All Database Migrations</span>
-                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm db:migrate</pre>
+                      <span className="text-primary font-bold text-[11px] sm:text-xs"># Apply All Database Migrations</span>
+                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2.5 rounded-xl border border-border/30 overflow-x-auto text-[11px] sm:text-xs">pnpm db:migrate</pre>
                     </div>
                     <div>
-                      <span className="text-primary font-bold"># Start the Expo Mobile App (with Cache Clearing)</span>
-                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm native</pre>
+                      <span className="text-primary font-bold text-[11px] sm:text-xs"># Start the Expo Mobile App (with Cache Clearing)</span>
+                      <pre className="text-foreground mt-1 select-all bg-card/65 p-2.5 rounded-xl border border-border/30 overflow-x-auto text-[11px] sm:text-xs">pnpm native</pre>
                     </div>
                   </div>
                 </div>

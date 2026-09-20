@@ -10,16 +10,16 @@ export function SiteFooter() {
   const isDashboard = pathname?.startsWith("/dashboard");
 
   return (
-    <footer className="border-t border-border/40 bg-background pt-10 pb-8 mt-auto">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
-          <div className="col-span-1 md:col-span-2">
+    <footer className="border-t border-border/40 bg-background pt-10 pb-24 md:pb-8 mt-auto">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 mb-8 md:mb-10">
+          <div className="col-span-1 md:col-span-2 text-center md:text-left">
             <div className="flex flex-col items-center md:items-start gap-4 mb-4">
               <Link
                 href="/"
-                className="flex items-center gap-2 group mb-2"
+                className="flex items-center gap-2 group mb-1"
               >
-                <div className="relative h-10 w-10 shrink-0">
+                <div className="relative h-9 w-9 sm:h-10 sm:w-10 shrink-0">
                   <Image
                     src="/logos/thunder.png"
                     alt="THUNDER Stack Logo"
@@ -33,30 +33,29 @@ export function SiteFooter() {
                     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
                     .footer-cursive-logo {
                       font-family: 'Dancing Script', cursive;
-                      font-size: 2.2rem;
                       line-height: 1;
                     }
                   `}</style>
-                  <span className="footer-cursive-logo text-amber-500 font-bold">
+                  <span className="footer-cursive-logo text-amber-500 font-bold text-2xl sm:text-3xl">
                     Paripoorna B.
                   </span>
                 </>
               </Link>
             </div>
-            <p className="text-muted-foreground max-w-sm mx-auto md:mx-0 mb-4 leading-relaxed text-sm text-center md:text-left">
+            <p className="text-muted-foreground max-w-sm mx-auto md:mx-0 mb-4 leading-relaxed text-xs sm:text-sm">
               High-performance, developer-first boilerplate with Next.js 15, Hono (Cloudflare Workers), Drizzle ORM, and Expo 54.
             </p>
           </div>
 
-          <div>
-            <h3 className="font-semibold text-foreground mb-4 text-base">
+          <div className="text-center md:text-left">
+            <h3 className="font-semibold text-foreground mb-3 sm:mb-4 text-sm sm:text-base">
               Documentation Hub
             </h3>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="/docs"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm"
                 >
                   Overview & Architecture
                 </Link>
@@ -64,7 +63,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/docs/db-guide"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm"
                 >
                   Database & Drizzle CLI Guide
                 </Link>
@@ -72,7 +71,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/docs/deployment-guide"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm"
                 >
                   Vercel & Cloudflare Deploy Guide
                 </Link>
@@ -80,8 +79,8 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <div>
-            <h3 className="font-semibold text-foreground mb-4 text-base">
+          <div className="text-center md:text-left">
+            <h3 className="font-semibold text-foreground mb-3 sm:mb-4 text-sm sm:text-base">
               Ecosystem & CLI
             </h3>
             <ul className="space-y-2.5">
@@ -101,7 +100,7 @@ export function SiteFooter() {
                   href="https://github.com/ParipoornaBhat/thunder-stack"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1.5"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm inline-flex items-center gap-1.5"
                 >
                   <Github className="h-4 w-4" />
                   GitHub Repository
@@ -112,7 +111,7 @@ export function SiteFooter() {
                   href="https://www.npmjs.com/package/create-thunder-stack"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center gap-1.5"
+                  className="text-muted-foreground hover:text-foreground transition-colors text-xs sm:text-sm inline-flex items-center gap-1.5"
                 >
                   <Package className="h-4 w-4 text-red-500" />
                   npm Registry Package

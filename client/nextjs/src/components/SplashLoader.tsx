@@ -73,11 +73,10 @@ export function SplashLoader() {
 
         .logo-wrapper {
           position: relative;
-          width: 24vw;
-          max-width: 180px;
+          width: clamp(110px, 26vw, 180px);
           aspect-ratio: 1/1;
           display: flex;
-          margin-bottom: 8vw;
+          margin-bottom: clamp(16px, 4vw, 32px);
           align-items: center;
           justify-content: center;
           perspective: 1000px;

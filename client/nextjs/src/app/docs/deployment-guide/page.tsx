@@ -22,9 +22,9 @@ export default function DeploymentGuidePage() {
     <div className="flex min-h-screen flex-col bg-background selection:bg-primary/30">
       <SiteHeader />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-24 md:pb-12">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground mb-8">
+        <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground mb-6 sm:mb-8">
           <Link href="/docs" className="hover:text-foreground transition-colors">
             Documentation
           </Link>
@@ -33,48 +33,48 @@ export default function DeploymentGuidePage() {
         </div>
 
         {/* Hero Section */}
-        <div className="space-y-4 mb-12">
+        <div className="space-y-3 sm:space-y-4 mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-500 text-xs font-semibold">
             <Cloud className="h-3.5 w-3.5" />
             <span>Multi-Platform Production Deployment</span>
           </div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
+          <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
             Vercel & Cloudflare Deployment Guide
           </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-3xl">
             Deploy the THUNDER Next.js web client to Vercel or Cloudflare Pages, and deploy the Hono API server globally to Cloudflare Workers with Wrangler.
           </p>
         </div>
 
-        <div className="h-px bg-border/60 mb-12" />
+        <div className="h-px bg-border/60 mb-8 sm:mb-12" />
 
         {/* Platform Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="p-6 rounded-3xl border border-border/50 bg-card shadow-xs space-y-3">
-            <div className="p-3 w-fit rounded-2xl bg-black dark:bg-white/10 text-white dark:text-foreground">
-              <Globe className="h-6 w-6" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
+          <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-border/50 bg-card shadow-xs space-y-3">
+            <div className="p-2.5 sm:p-3 w-fit rounded-2xl bg-black dark:bg-white/10 text-white dark:text-foreground">
+              <Globe className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
-            <h3 className="text-xl font-bold text-foreground">1. Vercel (Frontend)</h3>
+            <h3 className="text-lg sm:text-xl font-bold text-foreground">1. Vercel (Frontend)</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
               Zero-config deployment for the Next.js App Router client using root <code className="text-primary font-mono text-[11px]">vercel.json</code>.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl border border-border/50 bg-card shadow-xs space-y-3">
-            <div className="p-3 w-fit rounded-2xl bg-amber-500/10 text-amber-500">
-              <Cloud className="h-6 w-6" />
+          <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-border/50 bg-card shadow-xs space-y-3">
+            <div className="p-2.5 sm:p-3 w-fit rounded-2xl bg-amber-500/10 text-amber-500">
+              <Cloud className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
-            <h3 className="text-xl font-bold text-foreground">2. Cloudflare Pages (Frontend)</h3>
+            <h3 className="text-lg sm:text-xl font-bold text-foreground">2. Cloudflare Pages (Frontend)</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
               Edge deployment for Next.js using <code className="text-amber-500 font-mono text-[11px]">@cloudflare/next-on-pages</code>.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl border border-border/50 bg-card shadow-xs space-y-3">
-            <div className="p-3 w-fit rounded-2xl bg-orange-500/10 text-orange-500">
-              <Server className="h-6 w-6" />
+          <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-border/50 bg-card shadow-xs space-y-3">
+            <div className="p-2.5 sm:p-3 w-fit rounded-2xl bg-orange-500/10 text-orange-500">
+              <Server className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
-            <h3 className="text-xl font-bold text-foreground">3. Cloudflare Workers (Backend)</h3>
+            <h3 className="text-lg sm:text-xl font-bold text-foreground">3. Cloudflare Workers (Backend)</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
               Sub-millisecond global execution for the Hono REST API server using Wrangler.
             </p>
@@ -82,13 +82,13 @@ export default function DeploymentGuidePage() {
         </div>
 
         {/* Section 1: Vercel Deployment */}
-        <section id="vercel" className="space-y-6 mb-20 scroll-mt-28">
+        <section id="vercel" className="space-y-4 sm:space-y-6 mb-16 sm:mb-20 scroll-mt-28">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-black dark:bg-white/10 text-white dark:text-foreground">
-              <Globe className="h-6 w-6" />
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-black dark:bg-white/10 text-white dark:text-foreground shrink-0">
+              <Globe className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">Deploying Next.js Frontend to Vercel</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">Deploying Next.js Frontend to Vercel</h2>
               <p className="text-xs text-muted-foreground">
                 Official Vercel Web Dashboard import & zero-config deployment guide.
               </p>
@@ -97,9 +97,9 @@ export default function DeploymentGuidePage() {
 
           <div className="space-y-4">
             {/* Step A */}
-            <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4">
-              <h3 className="font-bold text-foreground text-lg flex items-center gap-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">1</span>
+            <div className="rounded-2xl border border-border/50 bg-card p-5 sm:p-6 space-y-4">
+              <h3 className="font-bold text-foreground text-base sm:text-lg flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">1</span>
                 Vercel Web Dashboard Import (Recommended)
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
@@ -131,9 +131,9 @@ export default function DeploymentGuidePage() {
             </div>
 
             {/* Step B */}
-            <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4">
-              <h3 className="font-bold text-foreground text-lg flex items-center gap-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">2</span>
+            <div className="rounded-2xl border border-border/50 bg-card p-5 sm:p-6 space-y-4">
+              <h3 className="font-bold text-foreground text-base sm:text-lg flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">2</span>
                 Manual Overrides (If Root Directory is set to `client/nextjs`)
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
@@ -147,9 +147,9 @@ export default function DeploymentGuidePage() {
             </div>
 
             {/* Step C */}
-            <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4">
-              <h3 className="font-bold text-foreground text-lg flex items-center gap-2">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold">3</span>
+            <div className="rounded-2xl border border-border/50 bg-card p-5 sm:p-6 space-y-4">
+              <h3 className="font-bold text-foreground text-base sm:text-lg flex items-center gap-2">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold shrink-0">3</span>
                 Environment Variables Reference
               </h3>
               <div className="overflow-x-auto">
@@ -169,8 +169,8 @@ export default function DeploymentGuidePage() {
                     </tr>
                     <tr>
                       <td className="py-2.5 px-3 font-bold text-primary">NEXT_PUBLIC_SERVER_URL</td>
-                      <td className="py-2.5 px-3">https://your-hono-api.workers.dev</td>
-                      <td className="py-2.5 px-3">https://your-hono-api.workers.dev</td>
+                      <td className="py-2.5 px-3 break-all">https://your-hono-api.workers.dev</td>
+                      <td className="py-2.5 px-3 break-all">https://your-hono-api.workers.dev</td>
                     </tr>
                   </tbody>
                 </table>
@@ -180,29 +180,29 @@ export default function DeploymentGuidePage() {
         </section>
 
         {/* Section 2: Cloudflare Pages Deployment */}
-        <section id="cloudflare-pages" className="space-y-6 mb-20 scroll-mt-28">
+        <section id="cloudflare-pages" className="space-y-4 sm:space-y-6 mb-16 sm:mb-20 scroll-mt-28">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-amber-500/10 text-amber-500">
-              <Cloud className="h-6 w-6" />
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-amber-500/10 text-amber-500 shrink-0">
+              <Cloud className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">Deploying Next.js Frontend to Cloudflare Pages</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">Deploying Next.js Frontend to Cloudflare Pages</h2>
               <p className="text-xs text-muted-foreground">
                 Deploying Next.js edge assets using the modern, officially recommended <code className="text-amber-500 font-mono text-xs">@opennextjs/cloudflare</code> adapter with zero double-compilation.
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4">
-            <h3 className="font-bold text-foreground text-lg">1. Build & Deploy Commands</h3>
-            <div className="rounded-xl border border-border/40 bg-muted/40 dark:bg-black/40 p-4 font-mono text-xs text-foreground space-y-4">
+          <div className="rounded-2xl border border-border/50 bg-card p-5 sm:p-6 space-y-4">
+            <h3 className="font-bold text-foreground text-base sm:text-lg">1. Build & Deploy Commands</h3>
+            <div className="rounded-xl border border-border/40 bg-muted/40 dark:bg-black/40 p-3 sm:p-4 font-mono text-xs text-foreground space-y-4 overflow-x-auto">
               <div>
-                <span className="text-amber-500 font-bold"># Step 1: Build Next.js for Cloudflare Pages (OpenNext)</span>
-                <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm build:web:cf</pre>
+                <span className="text-amber-500 font-bold text-[11px] sm:text-xs"># Step 1: Build Next.js for Cloudflare Pages (OpenNext)</span>
+                <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30 text-[11px] sm:text-xs">pnpm build:web:cf</pre>
               </div>
               <div>
-                <span className="text-amber-500 font-bold"># Step 2: Deploy compiled output (.open-next/.deploy) to Cloudflare</span>
-                <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm deploy:web:cf</pre>
+                <span className="text-amber-500 font-bold text-[11px] sm:text-xs"># Step 2: Deploy compiled output (.open-next/.deploy) to Cloudflare</span>
+                <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30 text-[11px] sm:text-xs">pnpm deploy:web:cf</pre>
               </div>
             </div>
 
@@ -238,59 +238,59 @@ export default function DeploymentGuidePage() {
         </section>
 
         {/* Section 3: Cloudflare Workers Deployment */}
-        <section id="cloudflare-workers" className="space-y-6 mb-20 scroll-mt-28">
+        <section id="cloudflare-workers" className="space-y-4 sm:space-y-6 mb-16 sm:mb-20 scroll-mt-28">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-orange-500/10 text-orange-500">
-              <Server className="h-6 w-6" />
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-orange-500/10 text-orange-500 shrink-0">
+              <Server className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">Deploying Hono Backend to Cloudflare Workers</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">Deploying Hono Backend to Cloudflare Workers</h2>
               <p className="text-xs text-muted-foreground">
                 Global serverless API deployment using Wrangler CLI.
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4">
-            <h3 className="font-bold text-foreground text-lg">Wrangler Deployment Walkthrough</h3>
-            <div className="rounded-xl border border-border/40 bg-muted/40 dark:bg-black/40 p-4 font-mono text-xs text-foreground space-y-4">
+          <div className="rounded-2xl border border-border/50 bg-card p-5 sm:p-6 space-y-4">
+            <h3 className="font-bold text-foreground text-base sm:text-lg">Wrangler Deployment Walkthrough</h3>
+            <div className="rounded-xl border border-border/40 bg-muted/40 dark:bg-black/40 p-3 sm:p-4 font-mono text-xs text-foreground space-y-4 overflow-x-auto">
               <div>
-                <span className="text-orange-500 font-bold"># Step 1: Set Secret Environment Variables in Cloudflare</span>
-                <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">npx wrangler secret put DATABASE_URL --cwd server/hono
+                <span className="text-orange-500 font-bold text-[11px] sm:text-xs"># Step 1: Set Secret Environment Variables in Cloudflare</span>
+                <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30 text-[11px] sm:text-xs">npx wrangler secret put DATABASE_URL --cwd server/hono
 npx wrangler secret put BETTER_AUTH_SECRET --cwd server/hono</pre>
               </div>
               <div>
-                <span className="text-orange-500 font-bold"># Step 2: Deploy Backend to Cloudflare Workers</span>
-                <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30">pnpm deploy:server</pre>
+                <span className="text-orange-500 font-bold text-[11px] sm:text-xs"># Step 2: Deploy Backend to Cloudflare Workers</span>
+                <pre className="text-emerald-400 mt-1 select-all bg-card/65 p-2 rounded-xl border border-border/30 text-[11px] sm:text-xs">pnpm deploy:server</pre>
               </div>
             </div>
           </div>
         </section>
 
         {/* Section 4: Aiven PostgreSQL & SSL Guide */}
-        <section id="postgres-ssl" className="space-y-6 mb-20 scroll-mt-28">
+        <section id="postgres-ssl" className="space-y-4 sm:space-y-6 mb-16 sm:mb-20 scroll-mt-28">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500">
-              <Layers className="h-6 w-6" />
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 shrink-0">
+              <Layers className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">PostgreSQL & Aiven SSL Configuration</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">PostgreSQL & Aiven SSL Configuration</h2>
               <p className="text-xs text-muted-foreground">
                 Connecting Drizzle ORM to Aiven, Supabase, Neon, or AWS RDS with zero TLS/CA errors.
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border/50 bg-card p-6 space-y-4">
+          <div className="rounded-2xl border border-border/50 bg-card p-5 sm:p-6 space-y-4">
             <p className="text-xs text-muted-foreground leading-relaxed">
               Cloud PostgreSQL providers like <strong>Aiven</strong> require encrypted TLS/SSL connections. Ensure your connection string ends with <code className="text-primary font-mono font-bold">?sslmode=require</code>:
             </p>
-            <pre className="p-3 bg-muted/50 rounded-xl font-mono text-xs text-foreground border border-border/40 select-all overflow-x-auto">
+            <pre className="p-3 bg-muted/50 rounded-xl font-mono text-[11px] sm:text-xs text-foreground border border-border/40 select-all overflow-x-auto">
               DATABASE_URL="postgres://avnadmin:PASSWORD@host.aivencloud.com:PORT/defaultdb?sslmode=require"
             </pre>
             <div className="rounded-xl border border-border/40 bg-muted/20 p-4 space-y-2 text-xs text-muted-foreground">
               <h4 className="font-bold text-foreground">Custom CA Certificates & Serverless Workers</h4>
-              <p>
+              <p className="leading-relaxed">
                 Thunder Stack's database client (<code className="font-mono text-foreground">server/db/src/client.ts</code>) automatically strips query parameters and applies <code className="font-mono text-primary font-bold">ssl: &#123; rejectUnauthorized: false &#125;</code> for remote connections. This avoids <code className="font-mono text-destructive">Error: self-signed certificate in certificate chain</code> issues in Cloudflare Workers and container runtimes while maintaining TLS encryption.
               </p>
             </div>
@@ -298,16 +298,16 @@ npx wrangler secret put BETTER_AUTH_SECRET --cwd server/hono</pre>
         </section>
 
         {/* Bottom CTA */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-8 rounded-3xl border border-primary/20 bg-linear-to-r from-primary/10 via-background to-secondary/10">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-primary/20 bg-linear-to-r from-primary/10 via-background to-secondary/10">
           <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-lg font-bold text-foreground">Need Database CLI Assistance?</h3>
+            <h3 className="text-base sm:text-lg font-bold text-foreground">Need Database CLI Assistance?</h3>
             <p className="text-xs text-muted-foreground">
               Learn how to generate schema migrations, seed roles, and run diagnostic status checks.
             </p>
           </div>
           <Link
             href="/docs/db-guide"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-all shrink-0 shadow-md"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold text-xs sm:text-sm hover:opacity-90 transition-all shrink-0 shadow-md active:scale-95"
           >
             <span>View Database Guide</span>
             <ArrowRight className="h-4 w-4" />

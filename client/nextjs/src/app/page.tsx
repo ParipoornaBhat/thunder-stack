@@ -29,7 +29,7 @@ export default function HomePage() {
         }
       `}</style>
       <main
-        className="flex-1 w-full"
+        className="flex-1 w-full pb-16 md:pb-0"
         style={{
           opacity: 0,
           animation:
@@ -37,44 +37,44 @@ export default function HomePage() {
         }}
       >
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-10 pb-32 lg:pt-25 lg:pb-40">
+        <section className="relative overflow-hidden pt-8 pb-20 sm:pt-12 sm:pb-32 lg:pt-24 lg:pb-40">
           {/* Dynamic background effects */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-100 bg-linear-to-tr from-primary/20 via-secondary/10 to-transparent blur-[120px] rounded-full pointer-events-none" />
 
           <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="mx-auto max-w-3xl">
-              <div className="inline-flex flex-col items-center mb-8 select-none">
-                <span className="text-[3.5vw] sm:text-[10px] md:text-[18px] lg:text-2xl font-semibold tracking-[0.22em] text-muted-foreground uppercase">
+              <div className="inline-flex flex-col items-center mb-6 sm:mb-8 select-none">
+                <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-muted-foreground uppercase px-3 py-1 rounded-full bg-muted/60 border border-border/50">
                   THUNDER Stack Console
                 </span>
               </div>
-              <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl mb-8">
+              <h1 className="text-3.5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6 sm:mb-8 leading-tight">
                 Accelerating Modern <br className="hidden sm:block" />
                 <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-secondary">
                   Web Development
                 </span>
               </h1>
-              <p className="mx-auto max-w-2xl text-lg text-muted-foreground mb-10 leading-relaxed">
+              <p className="mx-auto max-w-2xl text-sm sm:text-base md:text-lg text-muted-foreground mb-8 sm:mb-10 leading-relaxed px-2 sm:px-0">
                 A highly secure, role-based boilerplate designed to streamline
                 user permissions, lazy database queries, and automatic state mapping
                 across serverless stacks.
               </p>
-              <div className="flex flex-col items-center justify-center gap-4">
-                <div className="flex w-full flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto sm:max-w-none">
+                <div className="flex w-full flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                   <Link
                     href={primaryHref}
-                    className="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-primary px-8 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-500 ease-in-out hover:bg-primary/90 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    className="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-primary px-8 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 ease-in-out hover:bg-primary/90 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   >
                     {primaryLabel}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
+                  <Link
+                    href="#features"
+                    className="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-input bg-background/50 backdrop-blur-sm px-8 text-sm font-medium shadow-sm transition-all duration-300 ease-in-out hover:bg-accent hover:text-accent-foreground active:scale-95 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  >
+                    Explore Features
+                  </Link>
                 </div>
-                <Link
-                  href="#features"
-                  className="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-input bg-background/50 backdrop-blur-sm px-8 text-sm font-medium shadow-sm transition-all duration-500 ease-in-out hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                >
-                  Explore Features
-                </Link>
               </div>
             </div>
           </div>
@@ -83,51 +83,51 @@ export default function HomePage() {
         {/* Features Section */}
         <section
           id="features"
-          className="py-24 bg-muted/30 border-y border-border/50"
+          className="py-16 sm:py-24 bg-muted/30 border-y border-border/50"
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-3 sm:mb-4">
                 Designed for Excellence
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto">
                 Built with modern serverless technologies to ensure reliability, speed,
                 and a premium developer experience.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-card border border-border/50 shadow-sm transition-all hover:shadow-md hover:border-primary/20">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+              <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-card border border-border/50 shadow-xs transition-all hover:shadow-md hover:border-primary/20">
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-5 sm:mb-6">
                   <ShieldCheck className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">
                   Role-Based Access
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                   Granular permissions for standard users, managers, and
                   administrators ensure complete endpoint security and proper workflow
                   routing.
                 </p>
               </div>
 
-              <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-card border border-border/50 shadow-sm transition-all hover:shadow-md hover:border-secondary/20">
-                <div className="h-12 w-12 rounded-full bg-secondary/10 flex items-center justify-center mb-6">
+              <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-card border border-border/50 shadow-xs transition-all hover:shadow-md hover:border-secondary/20">
+                <div className="h-12 w-12 rounded-full bg-secondary/10 flex items-center justify-center mb-5 sm:mb-6">
                   <Calendar className="h-6 w-6 text-secondary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Lazy Connections</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">Lazy Connections</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                   Lazy-initialized database client connection proxies eliminate cold start overhead
                   within Cloudflare Worker endpoints.
                 </p>
               </div>
 
-              <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-card border border-border/50 shadow-sm transition-all hover:shadow-md hover:border-primary/20">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+              <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-card border border-border/50 shadow-xs transition-all hover:shadow-md hover:border-primary/20 sm:col-span-2 md:col-span-1">
+                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-5 sm:mb-6">
                   <Users className="h-6 w-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Session Shield</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3">Session Shield</h3>
+                <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
                   Automated user-agent validation protects against hijacked sessions, immediately
                   revoking copies from the database.
                 </p>
