@@ -80,7 +80,7 @@ export function SiteHeader() {
 
   const navItems = [
     { href: "/", label: "Overview" },
-    { href: "/#architecture", label: "3D Stack" },
+    { href: "/#architecture", label: "Architecture" },
     { href: "/docs", label: "Docs" },
     { href: "/docs/db-guide", label: "DB Guide" },
     { href: "/docs/deployment-guide", label: "Deploy" },

@@ -191,13 +191,13 @@ export function TechStack3D() {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono font-bold uppercase tracking-wider mb-3">
             <Activity className="w-3.5 h-3.5" />
-            <span>Interactive Architecture Canvas</span>
+            <span>System Architecture</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-foreground">
-            3D Axonometric Stack Matrix
+            End-to-End System Topology
           </h2>
           <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-2xl leading-relaxed">
-            Hover or tap layers to inspect real-time connection pipelines, live route handlers, and performance metrics across the THUNDER monorepo.
+            Inspect how client applications, edge API gateways, identity protocols, and database engines connect across the workspace.
           </p>
         </div>
 
@@ -207,15 +207,15 @@ export function TechStack3D() {
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-card border border-border/60 text-xs font-mono font-bold hover:bg-accent hover:text-foreground transition shadow-xs cursor-pointer active:scale-95"
           >
             {isExploded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-            <span>{isExploded ? "Dock Stack" : "Explode Stack"}</span>
+            <span>{isExploded ? "Collapse Layers" : "Expand Layers"}</span>
           </button>
         </div>
       </div>
 
-      {/* Main Grid: Left 3D Stage | Right Layer Inspector */}
+      {/* Main Grid: Left Stage | Right Layer Inspector */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        {/* Left Column: 3D Axonometric Stage */}
+        {/* Left Column: Interactive Topology Stage */}
         <div 
           ref={containerRef}
           onMouseMove={handleMouseMove}
@@ -227,11 +227,11 @@ export function TechStack3D() {
           
           <div className="absolute top-4 left-4 flex items-center gap-2 text-[10px] font-mono text-muted-foreground uppercase tracking-widest bg-muted/50 px-2.5 py-1 rounded-md border border-border/40">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>3D Axonometric View</span>
+            <span>Interactive Topology</span>
           </div>
 
           <div className="absolute bottom-4 left-4 text-[10px] font-mono text-muted-foreground">
-            Angle: {Math.round(rotation.x)}° / {Math.round(rotation.z)}°
+            Select any layer to inspect
           </div>
 
           {/* 3D Perspective Canvas Container */}
