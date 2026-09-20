@@ -89,14 +89,14 @@ export default app;`,
     schema: `// server/db/src/schema.ts (Drizzle ORM PostgreSQL RBAC)
 import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
 
-export className roles = pgTable("roles", {
+export const roles = pgTable("roles", {
   id: text("id").primaryKey(),
   name: text("name").notNull().unique(), // admin | manager | user
   isSystem: boolean("is_system").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export className users = pgTable("users", {
+export const users = pgTable("users", {
   id: text("id").primaryKey(),
   email: text("email").notNull().unique(),
   roleId: text("role_id").references(() => roles.id),
@@ -132,32 +132,31 @@ export default function MobileScreen() {
       <SiteHeader />
 
       <main className="flex-1 w-full">
-        {/* Hero Section */}
-        <section className="relative overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-32 border-b border-border/50">
+        {/* Editorial Hero Section */}
+        <section className="relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-32 border-b border-border/50">
           <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-5xl">
             
-            {/* Top Announcement Pill */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono font-bold uppercase tracking-wider mb-6 sm:mb-8 select-none shadow-xs">
-              <span className="flex h-2 w-2 rounded-full bg-primary animate-ping" />
-              <span>THUNDER STACK v1.0.3 — Production Ready</span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground mb-6 leading-[1.08]">
-              Full-stack engineering <br className="hidden sm:block" />
-              <span className="text-primary underline decoration-primary/30 decoration-wavy underline-offset-8">
-                at the speed of thought.
-              </span>
+            {/* Monumental Editorial Headline */}
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-[-0.04em] leading-[0.92] text-foreground mb-4 select-none">
+              Full-stack<br />
+              at the speed<br />
+              of thought
             </h1>
 
+            {/* Architectural Drafting Annotation */}
+            <div className="inline-flex items-center justify-center gap-2 font-mono text-xs sm:text-sm text-muted-foreground uppercase tracking-widest mb-10 select-none">
+              <span>↗</span>
+              <span className="border-b border-muted-foreground/40 pb-0.5">NOT BOILERPLATE</span>
+            </div>
+
             {/* Architectural Overview Paragraph */}
-            <p className="mx-auto max-w-3xl text-base sm:text-lg text-muted-foreground mb-10 leading-relaxed font-normal">
+            <p className="mx-auto max-w-2xl text-sm sm:text-base text-muted-foreground mb-10 leading-relaxed font-normal">
               Software engineering was never meant to be bottlenecked by endless boilerplate, cold-start latency, and disjointed tools. 
               We crafted <strong className="text-foreground font-semibold">THUNDER Stack</strong> for how modern teams actually build: an edge API on Cloudflare Workers, Next.js 15 App Router, Expo 54 native mobile, and Drizzle ORM.
             </p>
 
             {/* Interactive Tabbed CLI Terminal Box */}
-            <div className="max-w-xl mx-auto mb-10 rounded-2xl border border-border/60 bg-card p-2 sm:p-3 shadow-sm">
+            <div className="max-w-xl mx-auto mb-10 rounded-xl border border-border/70 bg-card p-2 sm:p-3 shadow-xs">
               <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/40 text-xs font-mono text-muted-foreground mb-2">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
@@ -185,7 +184,7 @@ export default function MobileScreen() {
               {/* Command Display & One-Click Copy */}
               <div 
                 onClick={handleCopyCli}
-                className="flex items-center justify-between p-3 rounded-xl bg-black/80 dark:bg-black/90 font-mono text-xs text-emerald-400 cursor-pointer group active:scale-[0.99] transition-all"
+                className="flex items-center justify-between p-3 rounded-lg bg-black/85 dark:bg-black/95 font-mono text-xs text-emerald-400 cursor-pointer group active:scale-[0.99] transition-all"
               >
                 <div className="flex items-center gap-2 truncate pr-2">
                   <span className="text-muted-foreground">$</span>
@@ -201,7 +200,7 @@ export default function MobileScreen() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-md mx-auto sm:max-w-none">
               <Link
                 href="/docs"
-                className="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-primary px-8 text-xs sm:text-sm font-bold text-primary-foreground shadow-md transition-all hover:opacity-95 active:scale-95"
+                className="inline-flex h-11 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-primary px-7 text-xs sm:text-sm font-mono font-bold text-primary-foreground shadow-xs transition-all hover:opacity-95 active:scale-95"
               >
                 <span>Explore Documentation</span>
                 <ArrowRight className="h-4 w-4" />
@@ -210,7 +209,7 @@ export default function MobileScreen() {
                 href="https://github.com/ParipoornaBhat/thunder-stack"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-border/80 bg-card px-8 text-xs sm:text-sm font-bold text-foreground shadow-xs hover:bg-accent transition-all active:scale-95"
+                className="inline-flex h-11 w-full sm:w-auto items-center justify-center gap-2 rounded-md border border-border/80 bg-card px-7 text-xs sm:text-sm font-mono font-bold text-foreground shadow-xs hover:bg-accent transition-all active:scale-95"
               >
                 <span>GitHub Repository</span>
                 <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />

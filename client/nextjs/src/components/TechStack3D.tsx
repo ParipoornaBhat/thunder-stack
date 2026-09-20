@@ -152,30 +152,7 @@ export const users = pgTable("users", {
 
 export function TechStack3D() {
   const [activeLayer, setActiveLayer] = useState<StackLayer>(STACK_LAYERS[0]);
-  const [isExploded, setIsExploded] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
-  const [rotation, setRotation] = useState({ x: 55, y: 0, z: -35 });
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    const mouseX = (e.clientX - centerX) / (rect.width / 2);
-    const mouseY = (e.clientY - centerY) / (rect.height / 2);
-
-    setRotation({
-      x: 55 - mouseY * 8,
-      y: mouseX * 6,
-      z: -35 + mouseX * 10
-    });
-  };
-
-  const handleMouseLeave = () => {
-    setRotation({ x: 55, y: 0, z: -35 });
-  };
 
   const handleCopyCode = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -185,11 +162,11 @@ export function TechStack3D() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto py-8 sm:py-12 px-4 sm:px-6 lg:px-8">
+    <div id="architecture" className="w-full max-w-6xl mx-auto py-12 sm:py-16 px-4 sm:px-6">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12 border-b border-border/50 pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12 border-b border-border/60 pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono font-bold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-primary/10 border border-primary/20 text-primary text-xs font-mono font-bold uppercase tracking-wider mb-3">
             <Activity className="w-3.5 h-3.5" />
             <span>System Architecture</span>
           </div>
@@ -201,120 +178,73 @@ export function TechStack3D() {
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          <button
-            onClick={() => setIsExploded(!isExploded)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-card border border-border/60 text-xs font-mono font-bold hover:bg-accent hover:text-foreground transition shadow-xs cursor-pointer active:scale-95"
-          >
-            {isExploded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-            <span>{isExploded ? "Collapse Layers" : "Expand Layers"}</span>
-          </button>
+        <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>5 Architectural Tiers</span>
         </div>
       </div>
 
-      {/* Main Grid: Left Stage | Right Layer Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      {/* Main Grid: Left Blueprint Layer Stack | Right Layer Inspector */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
         
-        {/* Left Column: Interactive Topology Stage */}
-        <div 
-          ref={containerRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          className="lg:col-span-7 relative min-h-[460px] sm:min-h-[520px] rounded-3xl border border-border/60 bg-card/60 backdrop-blur-md p-6 flex items-center justify-center overflow-hidden shadow-xs select-none"
-        >
-          {/* Architectural Drafting Lines Overlay */}
-          <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
-          
-          <div className="absolute top-4 left-4 flex items-center gap-2 text-[10px] font-mono text-muted-foreground uppercase tracking-widest bg-muted/50 px-2.5 py-1 rounded-md border border-border/40">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Interactive Topology</span>
+        {/* Left Column: Blueprint Layer Stack */}
+        <div className="lg:col-span-6 flex flex-col justify-between space-y-3 rounded-2xl border border-border/80 bg-card p-4 sm:p-6 shadow-xs select-none">
+          <div className="flex items-center justify-between pb-3 border-b border-border/50 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+            <span>Architecture Stack</span>
+            <span>Select Layer to Inspect</span>
           </div>
 
-          <div className="absolute bottom-4 left-4 text-[10px] font-mono text-muted-foreground">
-            Select any layer to inspect
-          </div>
+          <div className="space-y-2.5 py-2">
+            {STACK_LAYERS.map((layer, idx) => {
+              const isSelected = activeLayer.id === layer.id;
+              const Icon = layer.icon;
 
-          {/* 3D Perspective Canvas Container */}
-          <div 
-            className="relative w-full max-w-[340px] sm:max-w-[400px] h-[320px] sm:h-[360px] flex items-center justify-center transition-transform duration-300 ease-out"
-            style={{
-              perspective: "1200px",
-              perspectiveOrigin: "50% 50%"
-            }}
-          >
-            <div
-              className="relative w-full h-full flex items-center justify-center transition-transform duration-500 ease-out"
-              style={{
-                transformStyle: "preserve-3d",
-                transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`
-              }}
-            >
-              {/* Vertical Connecting Laser Guide Line */}
-              <div 
-                className="absolute w-0.5 bg-gradient-to-b from-primary via-emerald-500 to-amber-500 opacity-40 pointer-events-none transition-all duration-500"
-                style={{
-                  height: isExploded ? "320px" : "180px",
-                  transform: "translateZ(0px)",
-                }}
-              />
-
-              {/* Render Stack Plates from Bottom to Top */}
-              {STACK_LAYERS.map((layer, idx) => {
-                const isSelected = activeLayer.id === layer.id;
-                const Icon = layer.icon;
-
-                // Calculate vertical Z offset
-                const baseZ = (STACK_LAYERS.length - 1 - idx) * (isExploded ? 64 : 36);
-                const activeZOffset = isSelected ? 24 : 0;
-                const totalZ = baseZ + activeZOffset;
-
-                return (
-                  <div
-                    key={layer.id}
-                    onClick={() => setActiveLayer(layer)}
-                    className={`absolute w-[240px] sm:w-[280px] h-[70px] sm:h-[80px] rounded-2xl p-4 cursor-pointer transition-all duration-500 flex items-center justify-between border ${
-                      isSelected
-                        ? "border-primary bg-primary text-primary-foreground shadow-2xl scale-105 ring-4 ring-primary/20"
-                        : "border-border/80 bg-card/95 hover:border-primary/60 text-foreground hover:bg-muted/80 shadow-md"
-                    }`}
-                    style={{
-                      transformStyle: "preserve-3d",
-                      transform: `translateZ(${totalZ}px)`,
-                      boxShadow: isSelected 
-                        ? `0 20px 40px -10px ${layer.color}66, inset 0 0 15px ${layer.color}33`
-                        : "0 10px 25px -5px rgba(0,0,0,0.1)"
-                    }}
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div 
-                        className={`p-2.5 rounded-xl shrink-0 transition-colors ${
-                          isSelected 
-                            ? "bg-white/20 text-white" 
-                            : "bg-muted text-foreground"
-                        }`}
-                      >
-                        <Icon className="w-5 h-5" />
-                      </div>
-
-                      <div className="min-w-0 text-left">
-                        <div className={`text-[10px] font-mono font-bold uppercase tracking-wider truncate ${isSelected ? "text-white/80" : "text-muted-foreground"}`}>
-                          {layer.category}
-                        </div>
-                        <div className="text-xs sm:text-sm font-extrabold truncate leading-tight">
-                          {layer.name}
-                        </div>
-                      </div>
+              return (
+                <div
+                  key={layer.id}
+                  onClick={() => setActiveLayer(layer)}
+                  className={`p-4 rounded-xl cursor-pointer transition-all duration-200 border flex items-center justify-between ${
+                    isSelected
+                      ? "border-primary bg-primary text-primary-foreground shadow-md ring-2 ring-primary/20 scale-[1.01]"
+                      : "border-border/70 bg-muted/20 hover:border-border hover:bg-muted/50 text-foreground"
+                  }`}
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div 
+                      className={`p-2 rounded-lg shrink-0 transition-colors ${
+                        isSelected 
+                          ? "bg-white/20 text-white" 
+                          : "bg-card text-foreground border border-border/60"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
                     </div>
 
-                    <div className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full shrink-0 ${
-                      isSelected ? "bg-white text-neutral-900" : "bg-muted text-muted-foreground"
-                    }`}>
-                      0{STACK_LAYERS.length - idx}
+                    <div className="min-w-0 text-left">
+                      <div className={`text-[10px] font-mono font-bold uppercase tracking-wider truncate ${isSelected ? "text-white/80" : "text-muted-foreground"}`}>
+                        {layer.category}
+                      </div>
+                      <div className="text-xs sm:text-sm font-extrabold truncate">
+                        {layer.name}
+                      </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${
+                      isSelected ? "bg-white text-neutral-900 font-bold" : "bg-muted text-muted-foreground font-mono"
+                    }`}>
+                      0{idx + 1}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="pt-3 border-t border-border/50 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
+            <span>Zero cold start latency</span>
+            <span>Type-safe end-to-end</span>
           </div>
         </div>
 

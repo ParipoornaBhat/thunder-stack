@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Toaster } from "sonner";
@@ -7,7 +6,19 @@ import { SmoothScroll } from "~/components/SmoothScroll";
 import { AppProvider } from "~/context/AppContext";
 import { siteConfig } from "~/config/site";
 
-const inter = Inter({ subsets: ["latin"] });
+const spaceGrotesk = Space_Grotesk({ 
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["400", "500", "600", "700"]
+});
+
+const spaceMono = Space_Mono({ 
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "700"]
+});
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
@@ -29,8 +40,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${spaceMono.variable}`}>
+      <body className="min-h-screen bg-background text-foreground antialiased font-sans">
         <SmoothScroll />
         <ThemeProvider
           attribute="class"
