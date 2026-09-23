@@ -253,7 +253,7 @@ importers:
     dependencies:
       better-auth:
         specifier: 1.6.23
-        version: 1.6.23(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 1.6.23(@cloudflare/workers-types@5.20260708.1)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7))(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       clsx:
         specifier: 2.1.1
         version: 2.1.1
@@ -325,16 +325,19 @@ importers:
         version: 0.10.4
       better-auth:
         specifier: 1.6.23
-        version: 1.6.23(@cloudflare/workers-types@5.20260708.1)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7))(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 1.6.23(@cloudflare/workers-types@5.20260708.1)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7))(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       dotenv:
         specifier: 16.6.1
         version: 16.6.1
       drizzle-orm:
         specifier: 0.38.4
-        version: 0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7)
+        version: 0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7)
       pg:
         specifier: 8.22.0
         version: 8.22.0
+      postgres:
+        specifier: ^3.4.5
+        version: 3.4.9
     devDependencies:
       '@types/node':
         specifier: 22.20.0
@@ -359,7 +362,7 @@ importers:
         version: link:../db
       better-auth:
         specifier: 1.6.23
-        version: 1.6.23(@cloudflare/workers-types@5.20260708.1)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7))(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        version: 1.6.23(@cloudflare/workers-types@5.20260708.1)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7))(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       hono:
         specifier: 4.12.28
         version: 4.12.28
@@ -5354,6 +5357,10 @@ packages:
   postgres-range@1.1.4:
     resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
 
+  postgres@3.4.9:
+    resolution: {integrity: sha512-GD3qdB0x1z9xgFI6cdRD6xu2Sp2WCOEoe3mtnyB5Ee0XrrL5Pe+e4CCnJrRMnL1zYtRDZmQQVbvOttLnKDLnaw==}
+    engines: {node: '>=12'}
+
   pretty-bytes@5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
     engines: {node: '>=6'}
@@ -7472,17 +7479,12 @@ snapshots:
     optionalDependencies:
       '@cloudflare/workers-types': 5.20260708.1
 
-  '@better-auth/drizzle-adapter@1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@cloudflare/workers-types@5.20260708.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7))':
+  '@better-auth/drizzle-adapter@1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@cloudflare/workers-types@5.20260708.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7))':
     dependencies:
       '@better-auth/core': 1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@cloudflare/workers-types@5.20260708.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0)
       '@better-auth/utils': 0.4.2
     optionalDependencies:
-      drizzle-orm: 0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7)
-
-  '@better-auth/drizzle-adapter@1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)':
-    dependencies:
-      '@better-auth/core': 1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@cloudflare/workers-types@5.20260708.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0)
-      '@better-auth/utils': 0.4.2
+      drizzle-orm: 0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7)
 
   '@better-auth/kysely-adapter@1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(kysely@0.29.3)':
     dependencies:
@@ -8159,7 +8161,7 @@ snapshots:
       metro-resolver: 0.83.3
       metro-runtime: 0.83.3
       metro-source-map: 0.83.3(supports-color@10.2.2)
-      metro-symbolicate: 0.83.3(supports-color@10.2.2)
+      metro-symbolicate: 0.83.3
       metro-transform-plugins: 0.83.3(supports-color@10.2.2)
       metro-transform-worker: 0.83.3(supports-color@10.2.2)
     transitivePeerDependencies:
@@ -9769,10 +9771,10 @@ snapshots:
 
   baseline-browser-mapping@2.10.42: {}
 
-  better-auth@1.6.23(@cloudflare/workers-types@5.20260708.1)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7))(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+  better-auth@1.6.23(@cloudflare/workers-types@5.20260708.1)(drizzle-kit@0.30.6(supports-color@10.2.2))(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7))(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       '@better-auth/core': 1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@cloudflare/workers-types@5.20260708.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0)
-      '@better-auth/drizzle-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@cloudflare/workers-types@5.20260708.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7))
+      '@better-auth/drizzle-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@cloudflare/workers-types@5.20260708.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7))
       '@better-auth/kysely-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(kysely@0.29.3)
       '@better-auth/memory-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)
       '@better-auth/mongo-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)
@@ -9790,35 +9792,7 @@ snapshots:
       zod: 4.4.3
     optionalDependencies:
       drizzle-kit: 0.30.6(supports-color@10.2.2)
-      drizzle-orm: 0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7)
-      next: 15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      pg: 8.22.0
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-    transitivePeerDependencies:
-      - '@cloudflare/workers-types'
-      - '@opentelemetry/api'
-
-  better-auth@1.6.23(next@15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(pg@8.22.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
-    dependencies:
-      '@better-auth/core': 1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(@cloudflare/workers-types@5.20260708.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0)
-      '@better-auth/drizzle-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)
-      '@better-auth/kysely-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(kysely@0.29.3)
-      '@better-auth/memory-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)
-      '@better-auth/mongo-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)
-      '@better-auth/prisma-adapter': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)
-      '@better-auth/telemetry': 1.6.23(@better-auth/core@1.6.23(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)(better-call@1.3.7(zod@4.4.3))(jose@6.2.3)(kysely@0.29.3)(nanostores@1.4.0))(@better-auth/utils@0.4.2)(@better-fetch/fetch@1.3.1)
-      '@better-auth/utils': 0.4.2
-      '@better-fetch/fetch': 1.3.1
-      '@noble/ciphers': 2.2.0
-      '@noble/hashes': 2.2.0
-      better-call: 1.3.7(zod@4.4.3)
-      defu: 6.1.7
-      jose: 6.2.3
-      kysely: 0.29.3
-      nanostores: 1.4.0
-      zod: 4.4.3
-    optionalDependencies:
+      drizzle-orm: 0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7)
       next: 15.5.20(@babel/core@7.29.7(supports-color@10.2.2))(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       pg: 8.22.0
       react: 19.2.7
@@ -10207,7 +10181,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(react@19.2.7):
+  drizzle-orm@0.38.4(@cloudflare/workers-types@5.20260708.1)(@neondatabase/serverless@0.10.4)(@types/pg@8.20.0)(@types/react@19.2.17)(kysely@0.29.3)(pg@8.22.0)(postgres@3.4.9)(react@19.2.7):
     optionalDependencies:
       '@cloudflare/workers-types': 5.20260708.1
       '@neondatabase/serverless': 0.10.4
@@ -10215,6 +10189,7 @@ snapshots:
       '@types/react': 19.2.17
       kysely: 0.29.3
       pg: 8.22.0
+      postgres: 3.4.9
       react: 19.2.7
 
   dunder-proto@1.0.1:
@@ -11304,7 +11279,7 @@ snapshots:
       '@babel/types': 7.29.7
       flow-enums-runtime: 0.0.6
       invariant: 2.2.4
-      metro-symbolicate: 0.83.3(supports-color@10.2.2)
+      metro-symbolicate: 0.83.3
       nullthrows: 1.1.1
       ob1: 0.83.3
       source-map: 0.5.7
@@ -11318,7 +11293,7 @@ snapshots:
       '@babel/types': 7.29.7
       flow-enums-runtime: 0.0.6
       invariant: 2.2.4
-      metro-symbolicate: 0.84.4(supports-color@10.2.2)
+      metro-symbolicate: 0.84.4
       nullthrows: 1.1.1
       ob1: 0.84.4
       source-map: 0.5.7
@@ -11326,7 +11301,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  metro-symbolicate@0.83.3(supports-color@10.2.2):
+  metro-symbolicate@0.83.3:
     dependencies:
       flow-enums-runtime: 0.0.6
       invariant: 2.2.4
@@ -11334,10 +11309,8 @@ snapshots:
       nullthrows: 1.1.1
       source-map: 0.5.7
       vlq: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
 
-  metro-symbolicate@0.84.4(supports-color@10.2.2):
+  metro-symbolicate@0.84.4:
     dependencies:
       flow-enums-runtime: 0.0.6
       invariant: 2.2.4
@@ -11345,8 +11318,6 @@ snapshots:
       nullthrows: 1.1.1
       source-map: 0.5.7
       vlq: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
 
   metro-transform-plugins@0.83.3(supports-color@10.2.2):
     dependencies:
@@ -11442,7 +11413,7 @@ snapshots:
       metro-resolver: 0.83.3
       metro-runtime: 0.83.3
       metro-source-map: 0.83.3(supports-color@10.2.2)
-      metro-symbolicate: 0.83.3(supports-color@10.2.2)
+      metro-symbolicate: 0.83.3
       metro-transform-plugins: 0.83.3(supports-color@10.2.2)
       metro-transform-worker: 0.83.3(supports-color@10.2.2)
       mime-types: 2.1.35
@@ -11488,7 +11459,7 @@ snapshots:
       metro-resolver: 0.84.4
       metro-runtime: 0.84.4
       metro-source-map: 0.84.4(supports-color@10.2.2)
-      metro-symbolicate: 0.84.4(supports-color@10.2.2)
+      metro-symbolicate: 0.84.4
       metro-transform-plugins: 0.84.4(supports-color@10.2.2)
       metro-transform-worker: 0.84.4(supports-color@10.2.2)
       mime-types: 3.0.2
@@ -11855,6 +11826,8 @@ snapshots:
   postgres-interval@3.0.0: {}
 
   postgres-range@1.1.4: {}
+
+  postgres@3.4.9: {}
 
   pretty-bytes@5.6.0: {}
 

@@ -20,7 +20,15 @@ const question = (query) => new Promise((resolve) => rl.question(query, resolve)
 async function main() {
   console.log('\x1b[33m%s\x1b[0m', '⚡ Welcome to the THUNDER Stack Installer! ⚡');
   
-  let projectName = process.argv[2]?.trim();
+  const rawArgs = process.argv.slice(2);
+  const hasAiFlag = rawArgs.includes('--ai') || rawArgs.includes('-a') || rawArgs.includes('--internal') || rawArgs.includes('--docs');
+  const positionalArgs = rawArgs.filter((arg) => !arg.startsWith('-'));
+
+  if (hasAiFlag) {
+    console.log('\x1b[36m%s\x1b[0m', '🧠 AI blueprints, deployment guides & fix documentation enabled (.internal/)');
+  }
+
+  let projectName = positionalArgs[0]?.trim();
   let targetDir;
   let isCurrentDir = false;
 
@@ -86,7 +94,7 @@ async function main() {
   let isDevMode = false;
   if (fs.existsSync(rootPackageJsonPath)) {
     const pkg = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf8'));
-    if (pkg.name === 'thunder-monorepo') {
+    if (pkg.name === 'thunder-stack' || pkg.name === 'thunder-monorepo') {
       isDevMode = true;
     }
   }
@@ -106,10 +114,13 @@ async function main() {
     '.git',
     'pnpm-lock.yaml',
     '.env',
-    '.internal',
     'create-thunder-app', // Ignore this package directory itself
     'create-thunder-stack', // Ignore renamed package directory itself
   ];
+
+  if (!hasAiFlag) {
+    ignoreList.push('.internal');
+  }
 
   const safeProjectName = projectName.toLowerCase();
   const capitalizedProjectName = projectName.charAt(0).toUpperCase() + projectName.slice(1);
@@ -148,6 +159,8 @@ async function main() {
         content = content.replace(/thunder-monorepo/g, `${safeProjectName}-monorepo`);
         content = content.replace(/@thunder\//g, `@${safeProjectName}/`);
         content = content.replace(/thunder-api/g, `${safeProjectName}-api`);
+        content = content.replace(/thunder-server/g, `${safeProjectName}-server`);
+        content = content.replace(/thunder-client/g, `${safeProjectName}-client`);
         content = content.replace(/Thunder Mobile App/g, `${capitalizedProjectName} Mobile App`);
         content = content.replace(/thunder-mobile-app/g, `${safeProjectName}-mobile-app`);
         content = content.replace(/"scheme": "thunder"/g, `"scheme": "${safeProjectName}"`);

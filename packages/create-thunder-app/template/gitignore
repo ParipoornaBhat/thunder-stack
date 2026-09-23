@@ -11,6 +11,7 @@ build/
 .wrangler/
 .next-env.d.ts
 out/
+.internal/
 
 # Environment Variables & Secrets
 .env

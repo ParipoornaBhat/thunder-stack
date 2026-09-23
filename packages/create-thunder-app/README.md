@@ -16,7 +16,14 @@ npx create-thunder-stack my-app
 
 # Or scaffold directly inside your current directory
 npx create-thunder-stack .
+
+# Scaffold with full AI architecture blueprints, deployment guides & fix docs (.internal/)
+npx create-thunder-stack my-app --ai
+npx create-thunder-stack . --ai
 ```
+
+> [!TIP]
+> Use the `--ai` (or `--docs`, `--internal`) flag to bundle the universal DevOps master deployment guides, database & Hyperdrive blueprints, and cross-origin auth architecture into `.internal/` for AI pair-programming and developer agents.
 
 The installer will automatically scaffold the workspace, install dependencies, and run the preparation script to copy `.env.example` to `.env` and connect `.dev.vars` inside the Hono server to it.
 

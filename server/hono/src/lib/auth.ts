@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { emailOTP } from "better-auth/plugins";
+import { emailOTP, bearer } from "better-auth/plugins";
 import { db, user, session, account, verification, userRole, role } from "@thunder/db";
 import { sendOTP } from "./email.js";
 import { getClientUrls, getServerUrl } from "./env.js";
@@ -14,7 +14,16 @@ let _auth: any = null;
 const getAuth = () => {
   if (!_auth) {
     _auth = betterAuth({
+      advanced: {
+        defaultCookieAttributes: {
+          sameSite: "none",
+          secure: true,
+          httpOnly: true,
+          path: "/",
+        },
+      },
       plugins: [
+        bearer(),
         emailOTP({
           async sendVerificationOTP({ email, otp }: { email: string; otp: string }) {
             await sendOTP(email, otp);

@@ -9,8 +9,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "noImplicitAny": false,
     "target": "ESNext"
   },
-  "include": ["src/**/*", "app/**/*", "**/*.ts", "**/*.tsx", "**/*.d.ts"]
+  "include": ["**/*.ts", "**/*.tsx"]
 }

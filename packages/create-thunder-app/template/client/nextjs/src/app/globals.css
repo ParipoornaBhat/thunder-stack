@@ -2,50 +2,51 @@
 
 @layer base {
   :root {
-    --background: oklch(0.9821 0 0);
-    --foreground: oklch(0.2435 0 0);
-    --card: oklch(0.9911 0 0);
-    --card-foreground: oklch(0.2435 0 0);
-    --popover: oklch(0.9911 0 0);
-    --popover-foreground: oklch(0.2435 0 0);
-    --primary: oklch(0.45 0.18 255.0);
-    --primary-foreground: oklch(1 0 0);
-    --secondary: oklch(0.92 0.04 220.0);
-    --secondary-foreground: oklch(0.45 0.18 255.0);
-    --muted: oklch(0.9521 0 0);
-    --muted-foreground: oklch(0.5032 0 0);
-    --accent: oklch(0.931 0 0);
-    --accent-foreground: oklch(0.2435 0 0);
-    --destructive: oklch(0.6271 0.1936 33.339);
-    --destructive-foreground: oklch(1 0 0);
-    --border: oklch(0.8822 0 0);
-    --input: oklch(0.8822 0 0);
-    --ring: oklch(0.45 0.18 255.0);
-    --radius: 0.75rem;
+    --background: #ECE6D8;
+    --foreground: #191B1F;
+    --card: #F5EFE2;
+    --card-foreground: #191B1F;
+    --popover: #F5EFE2;
+    --popover-foreground: #191B1F;
+    --primary: #23386E;
+    --primary-foreground: #FFFFFF;
+    --secondary: #E2DBCB;
+    --secondary-foreground: #23386E;
+    --muted: #E4DEC0;
+    --muted-foreground: #5C584E;
+    --accent: #DDD6C5;
+    --accent-foreground: #1E4CA8;
+    --destructive: #B91C1C;
+    --destructive-foreground: #FFFFFF;
+    --border: #D8D1BF;
+    --input: #D8D1BF;
+    --ring: #23386E;
+    --radius: 0.625rem;
   }
 
   .dark {
-    --background: oklch(0.1776 0 0);
-    --foreground: oklch(0.9491 0 0);
-    --card: oklch(0.2134 0 0);
-    --card-foreground: oklch(0.9491 0 0);
-    --popover: oklch(0.2134 0 0);
-    --popover-foreground: oklch(0.9491 0 0);
-    --primary: oklch(0.65 0.18 255.0);
-    --primary-foreground: oklch(0.2029 0.024 200.1962);
-    --secondary: oklch(0.28 0.08 240.0);
-    --secondary-foreground: oklch(0.65 0.18 255.0);
-    --muted: oklch(0.252 0 0);
-    --muted-foreground: oklch(0.7699 0 0);
-    --accent: oklch(0.285 0 0);
-    --accent-foreground: oklch(0.9491 0 0);
-    --destructive: oklch(0.6271 0.1936 33.339);
-    --destructive-foreground: oklch(1 0 0);
-    --border: oklch(0.2351 0.0115 91.7467);
-    --input: oklch(0.4017 0 0);
-    --ring: oklch(0.65 0.18 255.0);
+    --background: #14171D;
+    --foreground: #EDE8DC;
+    --card: #1B1F27;
+    --card-foreground: #EDE8DC;
+    --popover: #1B1F27;
+    --popover-foreground: #EDE8DC;
+    --primary: #4C72B0;
+    --primary-foreground: #FFFFFF;
+    --secondary: #232833;
+    --secondary-foreground: #C8D4EB;
+    --muted: #1E232D;
+    --muted-foreground: #8C96A6;
+    --accent: #262C38;
+    --accent-foreground: #EDE8DC;
+    --destructive: #E05252;
+    --destructive-foreground: #FFFFFF;
+    --border: #2B313F;
+    --input: #2B313F;
+    --ring: #4C72B0;
   }
 }
+
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -67,6 +68,9 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
@@ -82,19 +86,29 @@
     color: var(--foreground);
     font-feature-settings: "rlig" 1, "calt" 1;
     transition: background-color 0.3s ease, color 0.3s ease;
+    background-image: linear-gradient(to right, rgba(90, 75, 50, 0.09) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(90, 75, 50, 0.09) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .dark body,
+  body.dark {
+    background-image: linear-gradient(to right, rgba(100, 140, 200, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(100, 140, 200, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
   }
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(235, 230, 217, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .dark .glass {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(17, 19, 23, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }

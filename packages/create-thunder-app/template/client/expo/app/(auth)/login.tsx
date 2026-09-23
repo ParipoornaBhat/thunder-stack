@@ -65,8 +65,22 @@ export default function LoginScreen() {
         throw new Error(data.error?.message || data.message || "Invalid credentials");
       }
 
+      // better-auth returns { user, session: { token } }
+      let sessionToken = data.session?.token || data.token;
+      if (!sessionToken) {
+        const setCookie = response.headers.get("set-cookie") || "";
+        const match = setCookie.match(/better-auth\.session_token=([^;]+)/);
+        if (match) {
+          sessionToken = match[1];
+        }
+      }
+
+      if (!sessionToken) {
+        throw new Error("No session token received from server");
+      }
+
       Alert.alert("Success", "Welcome back!");
-      login(data.token, data.user);
+      login(sessionToken, data.user);
       router.replace("/(home)");
     } catch (e: any) {
       Alert.alert("Login Failed", e.message || "Something went wrong");

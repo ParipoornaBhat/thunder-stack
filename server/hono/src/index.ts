@@ -40,13 +40,19 @@ import { publicCache } from "./lib/cache.js";
 
 const app = new Hono<Env>();
 
-// Middleware to sync Wrangler environment bindings to process.env at request time
+// Middleware to sync Wrangler environment bindings to process.env and globalThis at request time
 app.use("*", async (c, next) => {
   if (c.env) {
     for (const [key, value] of Object.entries(c.env)) {
       if (typeof value === "string") {
         process.env[key] = value;
+        (globalThis as any)[key] = value;
       }
+    }
+    // Hyperdrive provides a dynamic pooled connection string per request
+    if ((c.env as any).HYPERDRIVE?.connectionString) {
+      process.env.DATABASE_URL = (c.env as any).HYPERDRIVE.connectionString;
+      (globalThis as any).DATABASE_URL = (c.env as any).HYPERDRIVE.connectionString;
     }
   }
   await next();

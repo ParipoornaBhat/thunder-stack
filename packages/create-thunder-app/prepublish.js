@@ -14,7 +14,7 @@ if (fs.existsSync(templateDir)) {
 }
 fs.mkdirSync(templateDir, { recursive: true });
 
-const foldersToCopy = ['client', 'server', 'packages/shared', 'scripts'];
+const foldersToCopy = ['client', 'server', 'packages/shared', 'scripts', '.internal'];
 const filesToCopy = [
   'package.json',
   'pnpm-workspace.yaml',

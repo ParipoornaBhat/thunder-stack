@@ -1,36 +1,13 @@
-import { drizzle } from "drizzle-orm/node-postgres";
-import pg from "pg";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import * as schema from "./schema/index.js";
 
 let _db: any = null;
 
 /**
- * Creates a dedicated, request-scoped database instance.
- * Explicitly sanitizes the connection string by stripping '?sslmode=...' so node-postgres (pg)
- * does not silently override 'rejectUnauthorized: false' with 'verify-full' (which causes SELF_SIGNED_CERT_IN_CHAIN on Aiven/Cloud DBs).
+ * Returns the singleton or lazily-initialized Drizzle ORM instance using postgres.js.
+ * Automatically adapts between Cloudflare Hyperdrive connection pooling, remote SSL, and local environments.
  */
-export function createRequestDb(connectionString: string) {
-  const cleanConnectionString = connectionString
-    .replace(/[\?&]sslmode=[^&]+/g, "")
-    .replace(/[\?&]ssl=[^&]+/g, "")
-    .replace(/\?&/, "?")
-    .replace(/[?&]$/, "");
-
-  const pool = new pg.Pool({
-    connectionString: cleanConnectionString,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-    max: 1,
-    maxUses: 1,
-    idleTimeoutMillis: 1000,
-    allowExitOnIdle: true,
-  });
-
-  const dbInstance = drizzle(pool, { schema });
-  return { db: dbInstance, pool };
-}
-
 function getDb() {
   if (!_db) {
     let connectionString = process.env.DATABASE_URL || (globalThis as any).DATABASE_URL;
@@ -38,6 +15,9 @@ function getDb() {
     if (!connectionString) {
       throw new Error("DATABASE_URL is not defined in env");
     }
+
+    const isHyperdrive =
+      connectionString.includes("hyperdrive") || connectionString.includes("cloudflare");
 
     const isRemote =
       !connectionString.includes("localhost") &&
@@ -49,36 +29,51 @@ function getDb() {
       connectionString.includes("ssl=") ||
       isRemote;
 
-    // Strip ?sslmode=... so node-postgres (pg) doesn't silently override rejectUnauthorized: false with verify-full
-    const cleanConnectionString = connectionString
-      .replace(/[\?&]sslmode=[^&]+/g, "")
-      .replace(/[\?&]ssl=[^&]+/g, "")
-      .replace(/\?&/, "?")
-      .replace(/[?&]$/, "");
-
-    // Aiven, Supabase, Neon, and AWS RDS use custom or self-signed intermediate CA certificates
-    // in cloud/serverless environments. Setting rejectUnauthorized: false prevents SELF_SIGNED_CERT_IN_CHAIN failures.
-    const pool = new pg.Pool({
-      connectionString: cleanConnectionString,
-      ssl: hasSSL || process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
-      max: 10,
-      maxUses: 1,
-      idleTimeoutMillis: 1000,
-      allowExitOnIdle: true,
-      connectionTimeoutMillis: 5000,
+    // postgres.js client configuration for edge & serverless runtimes
+    const client = postgres(connectionString, {
+      ssl: isHyperdrive ? false : (hasSSL ? "require" : false),
+      max: 5,
+      idle_timeout: 10,
+      connect_timeout: 10,
+      prepare: false, // Mandatory for Cloudflare Workers / serverless runtimes
     });
 
-    pool.on("error", (err) => {
-      console.error("Database pool unexpected error:", err);
-    });
-
-    _db = drizzle(pool, { schema });
+    _db = drizzle(client, { schema });
   }
   return _db;
 }
 
+/**
+ * Creates a dedicated, request-scoped database instance.
+ */
+export function createRequestDb(connectionString: string) {
+  const isHyperdrive =
+    connectionString.includes("hyperdrive") || connectionString.includes("cloudflare");
+
+  const isRemote =
+    !connectionString.includes("localhost") &&
+    !connectionString.includes("127.0.0.1") &&
+    !connectionString.includes("0.0.0.0");
+
+  const hasSSL =
+    connectionString.includes("sslmode=") ||
+    connectionString.includes("ssl=") ||
+    isRemote;
+
+  const client = postgres(connectionString, {
+    ssl: isHyperdrive ? false : (hasSSL ? "require" : false),
+    max: 1,
+    idle_timeout: 10,
+    connect_timeout: 10,
+    prepare: false,
+  });
+
+  const dbInstance = drizzle(client, { schema });
+  return { db: dbInstance, client };
+}
+
 // Lazy-initialized database client using a Proxy.
-// This prevents top-level module evaluation crashes in Cloudflare Workers and makes sure env variables are populated first.
+// This prevents top-level module evaluation crashes in Cloudflare Workers and ensures env variables are populated first.
 export const db = new Proxy({} as any, {
   get(target, prop, receiver) {
     const instance = getDb();
