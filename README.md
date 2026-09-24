@@ -195,8 +195,12 @@ pnpm deploy:all
 
 ### ☁️ 2. Cloudflare Deployment (Workers & Pages)
 
-#### A. Backend API (Cloudflare Workers)
-The backend runs on Cloudflare Workers with ultra-low latency edge compute.
+#### A. Backend API (Cloudflare Workers & Hyperdrive)
+The backend runs on Cloudflare Workers with ultra-low latency edge compute and Cloudflare Hyperdrive database query pooling.
+* **1-Command Hyperdrive Setup** *(Auto-creates Hyperdrive & binds ID to `wrangler.jsonc`)*:
+  ```bash
+  pnpm setup:hyperdrive
+  ```
 * **Deploy Worker**:
   ```bash
   pnpm deploy:server

@@ -7,6 +7,7 @@
   "scripts": {
     "prepare": "node scripts/setup-env.js",
     "sync:env": "node scripts/setup-env.js",
+    "setup:hyperdrive": "node scripts/setup-hyperdrive.js",
     "dev": "pnpm db:seed && turbo run dev",
     "build": "turbo run build",
     "build:web:cf": "cross-env NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 pnpm --filter nextjs run build:cf",
