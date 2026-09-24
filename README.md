@@ -197,9 +197,15 @@ pnpm deploy:all
 
 #### A. Backend API (Cloudflare Workers & Hyperdrive)
 The backend runs on Cloudflare Workers with ultra-low latency edge compute and Cloudflare Hyperdrive database query pooling.
-* **1-Command Hyperdrive Setup** *(Auto-creates Hyperdrive & binds ID to `wrangler.jsonc`)*:
+* **1-Command Hyperdrive Setup** *(Auto-creates Hyperdrive or links existing ID to `wrangler.jsonc`)*:
   ```bash
   pnpm setup:hyperdrive
+  # Or pass existing team ID: pnpm setup:hyperdrive <HYPERDRIVE_ID>
+  ```
+* **1-Command Hyperdrive URL Update** *(Updates remote DB connection string)*:
+  ```bash
+  pnpm update:hyperdrive
+  # Or pass new connection string: pnpm update:hyperdrive "postgresql://..."
   ```
 * **Deploy Worker**:
   ```bash
