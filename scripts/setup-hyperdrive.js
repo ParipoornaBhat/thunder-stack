@@ -11,8 +11,15 @@ const rootDir = path.resolve(__dirname, "..");
 
 console.log("⚡ Setting up Cloudflare Hyperdrive...");
 
-// Helper to load environment variables from .env or server/hono/.dev.vars
-function getDatabaseUrl() {
+// Helper to check for existing Hyperdrive ID from CLI argument or .env
+function getExplicitHyperdriveId() {
+  // Check CLI argument: pnpm setup:hyperdrive <HYPERDRIVE_ID>
+  const cliArg = process.argv[2];
+  if (cliArg && /^[a-f0-9-]{32,36}$/i.test(cliArg.trim())) {
+    return cliArg.trim();
+  }
+
+  // Check .env for HYPERDRIVE_ID or CLOUDFLARE_HYPERDRIVE_ID
   const envPaths = [
     path.join(rootDir, ".env"),
     path.join(rootDir, "server/hono/.dev.vars"),
@@ -21,8 +28,9 @@ function getDatabaseUrl() {
   for (const p of envPaths) {
     if (fs.existsSync(p)) {
       const content = fs.readFileSync(p, "utf-8");
-      const match = content.match(/^DATABASE_URL=["']?([^"'\r\n]+)["']?/m);
-      if (match && match[1] && !match[1].includes("user:password@localhost")) {
+      const match =
+        content.match(/^(?:HYPERDRIVE_ID|CLOUDFLARE_HYPERDRIVE_ID)=["']?([^"'\r\n]+)["']?/m);
+      if (match && match[1]) {
         return match[1].trim();
       }
     }
@@ -30,26 +38,50 @@ function getDatabaseUrl() {
   return null;
 }
 
-const dbUrl = getDatabaseUrl();
+const explicitId = getExplicitHyperdriveId();
 
-if (!dbUrl) {
-  console.error("❌ Error: Valid DATABASE_URL not found in .env or server/hono/.dev.vars");
-  console.error("👉 Please define DATABASE_URL in your root .env file and re-run.");
-  process.exit(1);
-}
+let hyperdriveId = explicitId;
 
-// Derive a clean name from package.json or directory
-let projectName = "thunder-stack";
-try {
-  const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, "package.json"), "utf-8"));
-  projectName = (pkg.name || path.basename(rootDir)).replace(/[^a-zA-Z0-9-]/g, "-").toLowerCase();
-} catch {}
+if (hyperdriveId) {
+  console.log(`✅ Using provided team Hyperdrive ID: ${hyperdriveId}`);
+} else {
+  // Helper to load environment variables from .env or server/hono/.dev.vars
+  function getDatabaseUrl() {
+    const envPaths = [
+      path.join(rootDir, ".env"),
+      path.join(rootDir, "server/hono/.dev.vars"),
+    ];
 
-const hyperdriveName = `${projectName}-hyperdrive`;
+    for (const p of envPaths) {
+      if (fs.existsSync(p)) {
+        const content = fs.readFileSync(p, "utf-8");
+        const match = content.match(/^DATABASE_URL=["']?([^"'\r\n]+)["']?/m);
+        if (match && match[1] && !match[1].includes("user:password@localhost")) {
+          return match[1].trim();
+        }
+      }
+    }
+    return null;
+  }
 
-console.log(`🔍 Checking existing Hyperdrive instances for "${hyperdriveName}"...`);
+  const dbUrl = getDatabaseUrl();
 
-let hyperdriveId = null;
+  if (!dbUrl) {
+    console.error("❌ Error: Valid DATABASE_URL not found in .env or server/hono/.dev.vars");
+    console.error("👉 Please define DATABASE_URL or pass an existing ID: pnpm setup:hyperdrive <ID>");
+    process.exit(1);
+  }
+
+  // Derive a clean name from package.json or directory
+  let projectName = "thunder-stack";
+  try {
+    const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, "package.json"), "utf-8"));
+    projectName = (pkg.name || path.basename(rootDir)).replace(/[^a-zA-Z0-9-]/g, "-").toLowerCase();
+  } catch {}
+
+  const hyperdriveName = `${projectName}-hyperdrive`;
+
+  console.log(`🔍 Checking existing Hyperdrive instances for "${hyperdriveName}"...`);
 
 try {
   const listOutput = execSync("pnpm --filter server exec wrangler hyperdrive list", {
