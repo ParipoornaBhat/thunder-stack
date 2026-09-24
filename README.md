@@ -169,6 +169,20 @@ pnpm run db:seed
 
 ThunderStack is architected for seamless multi-target production deployments across **Cloudflare Workers & Pages**, **Vercel**, **Managed PostgreSQL (Neon / Aiven / Supabase)**, and **Expo EAS (Mobile)**.
 
+---
+
+### 🔑 Platform Authentication & CLI Login (One-Time Setup)
+
+Before deploying to the respective cloud platforms for the first time, authenticate via their CLI tools:
+
+| Platform | Login Command | Check Whoami | Logout Command |
+|---|---|---|---|
+| **Cloudflare (Workers & Pages)** | `pnpm login:cf` *(or `wrangler login`)* | `pnpm whoami:cf` | `pnpm logout:cf` |
+| **Expo EAS (Mobile APK & iOS)** | `pnpm login:expo` *(or `npx eas login`)* | `pnpm whoami:expo` | `pnpm logout:expo` |
+| **Vercel (Web Frontend)** | `pnpm login:vercel` *(or `vercel login`)* | `pnpm whoami:vercel` | `pnpm logout:vercel` |
+
+---
+
 ### ⚡ 1. One-Command Full Deploy
 Deploy both your Cloudflare Worker backend and Cloudflare Pages web client together:
 ```bash
