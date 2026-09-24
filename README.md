@@ -163,35 +163,143 @@ pnpm run db:seed
 
 ---
 
-## 🌐 Production Deployment
+---
 
-### 1. Vercel Web Dashboard (Frontend)
-1. Import repository into [Vercel](https://vercel.com/new).
-2. Set **Root Directory**: `./` (Root) so Vercel reads the root `vercel.json`.
-3. Add **Environment Variable**: `NEXT_PUBLIC_IS_DOCS_ONLY = true` (for Docs Site) or `false` (for Full App).
+## 🌐 Production Deployment Guide
+
+ThunderStack is architected for seamless multi-target production deployments across **Cloudflare Workers & Pages**, **Vercel**, **Managed PostgreSQL (Neon / Aiven / Supabase)**, and **Expo EAS (Mobile)**.
+
+### ⚡ 1. One-Command Full Deploy
+Deploy both your Cloudflare Worker backend and Cloudflare Pages web client together:
+```bash
+pnpm deploy
+# or
+pnpm deploy:all
+```
+
+---
+
+### ☁️ 2. Cloudflare Deployment (Workers & Pages)
+
+#### A. Backend API (Cloudflare Workers)
+The backend runs on Cloudflare Workers with ultra-low latency edge compute.
+* **Deploy Worker**:
+  ```bash
+  pnpm deploy:server
+  ```
+* **Bulk Upload Encrypted Secrets** (from `server/hono/.dev.vars`):
+  ```bash
+  pnpm secrets:server
+  ```
+  *(Cloudflare retains encrypted secrets permanently across subsequent deploys.)*
+
+#### B. Web Frontend (Cloudflare Pages + OpenNext)
+The Next.js application is compiled via `@opennextjs/cloudflare` for high-performance edge rendering.
+* **Build & Deploy to Cloudflare Pages**:
+  ```bash
+  pnpm build:web:cf
+  pnpm deploy:web:cf
+  ```
+* **Bulk Upload Pages Secrets** (from `client/nextjs/.dev.vars`):
+  ```bash
+  pnpm secrets:client
+  ```
+
+#### C. Push All Secrets (Server & Client)
+```bash
+pnpm secrets:all
+```
+
+---
+
+### ▲ 3. Vercel Deployment (Next.js Frontend)
+
+#### Option A: Vercel CLI
+Deploy directly from your terminal:
+```bash
+pnpm deploy:web:vercel
+```
+
+#### Option B: Vercel Web Dashboard
+1. Import the Git repository into [Vercel Dashboard](https://vercel.com/new).
+2. Set **Root Directory**: `./` (Root) — Vercel will automatically detect the root [`vercel.json`](file:///d:/Codes/Working/thunder-stack/vercel.json).
+3. Configure your Environment Variables:
+   - `NEXT_PUBLIC_SERVER_URL` = `https://your-hono-worker.workers.dev`
+   - `BETTER_AUTH_SECRET` = `your-32-char-secret`
+   - `NEXT_PUBLIC_IS_DOCS_ONLY` = `false` (or `true` if deploying only documentation site)
 4. Click **Deploy**.
 
-### 2. Cloudflare Pages (Frontend)
-```bash
-pnpm build:web:cf
-pnpm deploy:web:cf
-```
+---
 
-### 3. Cloudflare Workers (Backend Hono)
-```bash
-npx wrangler secret put DATABASE_URL --cwd server/hono
-pnpm deploy:server
-```
+### 🗄️ 4. Database Setup & Production Management
+
+ThunderStack is powered by **Drizzle ORM** with native PostgreSQL support (works seamlessly with Neon Serverless, Aiven, Supabase, AWS RDS, or standard PostgreSQL).
+
+#### Database Production Lifecycle:
+1. **Configure Production URL**:
+   Ensure `DATABASE_URL` is set in your environment / Cloudflare Secrets (`pnpm secrets:server`).
+2. **Generate New Migration**:
+   ```bash
+   pnpm migrate:generate <feature_name>
+   ```
+3. **Deploy Migrations to Target DB**:
+   ```bash
+   pnpm migrate:deploy
+   ```
+4. **Check Migration & Table Status**:
+   ```bash
+   pnpm db:status
+   ```
+5. **Seed Production / Staging Data**:
+   ```bash
+   pnpm db:seed
+   ```
+6. **Rollback Last Migration**:
+   ```bash
+   pnpm db:rollback
+   ```
+7. **Launch Visual Database Studio**:
+   ```bash
+   pnpm db:studio
+   ```
+
+---
+
+### 📱 5. Mobile Client Deployment (Expo EAS)
+
+ThunderStack includes complete Expo Application Services (EAS) pipelines configured in [`eas.json`](file:///d:/Codes/Working/thunder-stack/client/expo/eas.json).
+
+* **Build Standalone Android APK & Auto-Sync to Web**:
+  ```bash
+  pnpm deploy:app
+  ```
+  *(Compiles the APK on EAS, grabs the live downloadable artifact URL via [`scripts/sync-eas-apk.js`](file:///d:/Codes/Working/thunder-stack/scripts/sync-eas-apk.js), injects `NEXT_PUBLIC_APP_DOWNLOAD_URL`, and automatically redeploys your web client with the direct download button!)*
+
+* **Build Production Android (APK/AAB) & Sync**:
+  ```bash
+  pnpm deploy:app:prod
+  ```
+
+* **Build Production iOS App**:
+  ```bash
+  pnpm deploy:app:ios
+  ```
+
+* **Sync Latest Existing APK Artifact**:
+  ```bash
+  pnpm sync:apk
+  ```
 
 ---
 
 ## 🧹 Utilities
 
-*   **Clean build/cache folders**:
-    ```bash
-    pnpm run clean
-    ```
-*   **Clean and Reinstall all dependencies**:
-    ```bash
-    pnpm run ci
-    ```
+* **Clean build/cache folders**:
+  ```bash
+  pnpm run clean
+  ```
+* **Clean and Reinstall all dependencies**:
+  ```bash
+  pnpm run ci
+  ```
+

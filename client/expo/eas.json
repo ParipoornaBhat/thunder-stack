@@ -1,0 +1,48 @@
+{
+  "cli": {
+    "version": ">= 12.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "node": "22.14.0"
+    },
+    "preview": {
+      "distribution": "internal",
+      "node": "22.14.0",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease -PreactNativeArchitectures=arm64-v8a"
+      },
+      "env": {
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+        "EAS_BUILD_NO_EXPO_GO_WARNING": "true"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "node": "22.14.0",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease -PreactNativeArchitectures=arm64-v8a"
+      },
+      "env": {
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+        "EAS_BUILD_NO_EXPO_GO_WARNING": "true"
+      }
+    },
+    "production-aab": {
+      "autoIncrement": true,
+      "node": "22.14.0",
+      "env": {
+        "NPM_CONFIG_LEGACY_PEER_DEPS": "true",
+        "EAS_BUILD_NO_EXPO_GO_WARNING": "true"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

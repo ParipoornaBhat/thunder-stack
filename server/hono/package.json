@@ -8,7 +8,8 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "start": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "secrets:push": "wrangler secret bulk .dev.vars"
   },
   "dependencies": {
     "@thunder/db": "workspace:*",
