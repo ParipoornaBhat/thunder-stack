@@ -38,32 +38,30 @@ function getExplicitHyperdriveId() {
   return null;
 }
 
-const explicitId = getExplicitHyperdriveId();
+// Helper to load database URL from .env or server/hono/.dev.vars
+function getDatabaseUrl() {
+  const envPaths = [
+    path.join(rootDir, ".env"),
+    path.join(rootDir, "server/hono/.dev.vars"),
+  ];
 
-let hyperdriveId = explicitId;
+  for (const p of envPaths) {
+    if (fs.existsSync(p)) {
+      const content = fs.readFileSync(p, "utf-8");
+      const match = content.match(/^DATABASE_URL=["']?([^"'\r\n]+)["']?/m);
+      if (match && match[1] && !match[1].includes("user:password@localhost")) {
+        return match[1].trim();
+      }
+    }
+  }
+  return null;
+}
+
+let hyperdriveId = getExplicitHyperdriveId();
 
 if (hyperdriveId) {
   console.log(`✅ Using provided team Hyperdrive ID: ${hyperdriveId}`);
 } else {
-  // Helper to load environment variables from .env or server/hono/.dev.vars
-  function getDatabaseUrl() {
-    const envPaths = [
-      path.join(rootDir, ".env"),
-      path.join(rootDir, "server/hono/.dev.vars"),
-    ];
-
-    for (const p of envPaths) {
-      if (fs.existsSync(p)) {
-        const content = fs.readFileSync(p, "utf-8");
-        const match = content.match(/^DATABASE_URL=["']?([^"'\r\n]+)["']?/m);
-        if (match && match[1] && !match[1].includes("user:password@localhost")) {
-          return match[1].trim();
-        }
-      }
-    }
-    return null;
-  }
-
   const dbUrl = getDatabaseUrl();
 
   if (!dbUrl) {
@@ -83,60 +81,58 @@ if (hyperdriveId) {
 
   console.log(`🔍 Checking existing Hyperdrive instances for "${hyperdriveName}"...`);
 
-try {
-  const listOutput = execSync("pnpm --filter server exec wrangler hyperdrive list", {
-    cwd: rootDir,
-    encoding: "utf-8",
-    stdio: ["pipe", "pipe", "pipe"],
-  });
+  try {
+    const listOutput = execSync("pnpm --filter server exec wrangler hyperdrive list", {
+      cwd: rootDir,
+      encoding: "utf-8",
+      stdio: ["pipe", "pipe", "pipe"],
+    });
 
-  // Check if our Hyperdrive exists in the list
-  const lines = listOutput.split("\n");
-  for (const line of lines) {
-    if (line.includes(hyperdriveName)) {
-      // Extract UUID from row
-      const match = line.match(/([a-f0-9]{32})/i) || line.match(/([a-f0-9-]{36})/i);
+    const lines = listOutput.split("\n");
+    for (const line of lines) {
+      if (line.includes(hyperdriveName)) {
+        const match = line.match(/([a-f0-9]{32})/i) || line.match(/([a-f0-9-]{36})/i);
+        if (match) {
+          hyperdriveId = match[1];
+          break;
+        }
+      }
+    }
+  } catch (e) {
+    console.log("ℹ️ Could not query existing Hyperdrives list, proceeding to create...");
+  }
+
+  if (hyperdriveId) {
+    console.log(`✅ Found existing Hyperdrive configuration: ${hyperdriveId}`);
+  } else {
+    console.log(`🚀 Creating new Cloudflare Hyperdrive configuration "${hyperdriveName}"...`);
+    try {
+      const createOutput = execSync(
+        `pnpm --filter server exec wrangler hyperdrive create "${hyperdriveName}" --connection-string="${dbUrl}"`,
+        {
+          cwd: rootDir,
+          encoding: "utf-8",
+          stdio: ["pipe", "pipe", "pipe"],
+        }
+      );
+
+      const match =
+        createOutput.match(/id:\s*["']?([a-f0-9-]{32,36})["']?/i) ||
+        createOutput.match(/([a-f0-9]{32})/i) ||
+        createOutput.match(/([a-f0-9-]{36})/i);
+
       if (match) {
         hyperdriveId = match[1];
-        break;
+      } else {
+        console.log(createOutput);
       }
+    } catch (error) {
+      console.error("❌ Failed to create Hyperdrive instance:", error.message);
+      if (error.stdout) console.log(error.stdout.toString());
+      if (error.stderr) console.error(error.stderr.toString());
+      console.error("👉 Make sure you are logged in by running: pnpm login:cf");
+      process.exit(1);
     }
-  }
-} catch (e) {
-  // If list fails (e.g. not logged in), notify user
-  console.log("ℹ️ Could not query existing Hyperdrives list, proceeding to create...");
-}
-
-if (hyperdriveId) {
-  console.log(`✅ Found existing Hyperdrive configuration: ${hyperdriveId}`);
-} else {
-  console.log(`🚀 Creating new Cloudflare Hyperdrive configuration "${hyperdriveName}"...`);
-  try {
-    const createOutput = execSync(
-      `pnpm --filter server exec wrangler hyperdrive create "${hyperdriveName}" --connection-string="${dbUrl}"`,
-      {
-        cwd: rootDir,
-        encoding: "utf-8",
-        stdio: ["pipe", "pipe", "pipe"],
-      }
-    );
-
-    const match =
-      createOutput.match(/id:\s*["']?([a-f0-9-]{32,36})["']?/i) ||
-      createOutput.match(/([a-f0-9]{32})/i) ||
-      createOutput.match(/([a-f0-9-]{36})/i);
-
-    if (match) {
-      hyperdriveId = match[1];
-    } else {
-      console.log(createOutput);
-    }
-  } catch (error) {
-    console.error("❌ Failed to create Hyperdrive instance:", error.message);
-    if (error.stdout) console.log(error.stdout.toString());
-    if (error.stderr) console.error(error.stderr.toString());
-    console.error("👉 Make sure you are logged in by running: pnpm login:cf");
-    process.exit(1);
   }
 }
 
