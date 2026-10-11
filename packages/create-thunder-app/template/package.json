@@ -27,6 +27,8 @@
     "db:help": "pnpm --filter @thunder/db db:help",
     "db:push": "pnpm --filter @thunder/db db:push",
     "db:studio": "pnpm --filter @thunder/db db:studio",
+    "db:sync:local": "node scripts/db-sync.js local",
+    "db:sync:remote": "node scripts/db-sync.js remote",
     "migrate:generate": "pnpm --filter @thunder/db db:generate --name",
     "migrate:deploy": "pnpm --filter @thunder/db db:migrate",
     "clean": "node scripts/clean.js",

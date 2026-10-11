@@ -117,6 +117,14 @@ Commands are run from the root using workspace filtering:
     ```bash
     pnpm db:seed
     ```
+*   **Hard-sync local from the online database** (`REMOTE_DATABASE_URL` overwrites `DATABASE_URL`):
+    ```bash
+    pnpm db:sync:local
+    ```
+*   **Hard-sync online from the local database** (`DATABASE_URL` overwrites `REMOTE_DATABASE_URL`):
+    ```bash
+    pnpm db:sync:remote
+    ```
 
 Alternatively, you can run them directly in the directory `server/db`:
 ```bash

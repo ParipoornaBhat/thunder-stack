@@ -108,6 +108,7 @@ let envConfig = {
   EXPO_PUBLIC_SERVER_URL: false,
   NEXT_PUBLIC_IS_DOCS_ONLY: false,
   DATABASE_URL: true,
+  REMOTE_DATABASE_URL: true,
   BETTER_AUTH_SECRET: true,
   BETTER_AUTH_URL: true,
   GOOGLE_CLIENT_ID: true,
