@@ -1,0 +1,6 @@
+{
+  "name": "server-go",
+  "version": "1.0.0",
+  "private": true,
+  "description": "THUNDER API in Go. create-thunder-stack renames this package to \"server\" and adds dev scripts when Go is selected."
+}

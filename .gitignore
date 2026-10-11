@@ -46,3 +46,6 @@ Thumbs.db
 # Local databases
 *.db
 *.db-journal
+
+# Go API build output
+server/go/bin/

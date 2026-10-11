@@ -13,7 +13,8 @@ thunder-stack/
 │   └── nextjs/           # Web Client App (Next.js + TailwindCSS) - [Package: nextjs]
 ├── server/
 │   ├── db/               # Shared Database Package (Drizzle Schema, Migrations, & Services) - [Package: @thunder/db]
-│   └── hono/             # Backend API Server (Hono + Cloudflare Workers / Wrangler) - [Package: server]
+│   ├── hono/             # Backend API Server (Hono + Cloudflare Workers / Wrangler) - [Package: server]
+│   └── go/               # Same API in Go. Run with `pnpm dev:go`.
 └── packages/
     ├── shared/           # Common Shared Configs & Utilities
     └── create-thunder-app # CLI bootstrap tool
@@ -56,6 +57,17 @@ pnpm migrate:deploy
 ## 🛠️ Run, Build & Dev Commands
 
 These commands run globally using **Turbo** to orchestrate across all workspaces.
+
+### Local setup, then dev, build, or start
+These commands create `.env` when it is missing, start local Postgres with Docker when `DATABASE_URL` points at localhost and nothing is listening, then migrate and seed.
+
+```bash
+pnpm local:dev
+pnpm local:build
+pnpm local:start
+```
+
+`local:start` serves the local production build. It builds first when `client/nextjs/.next` is missing. The Go API in `server/go` can be started on its own with `pnpm dev:go`.
 
 ### Start All Development Servers Concurrently
 ```bash

@@ -21,6 +21,7 @@ const filesToCopy = [
   'turbo.json',
   '.gitignore',
   '.env.example',
+  'docker-compose.yml',
   'THUNDER_STACK.md',
   'README.md'
 ];

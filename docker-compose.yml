@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: thunder-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: thunder_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - thunder_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d thunder_db"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  thunder_pg_data:
